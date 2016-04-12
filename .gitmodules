@@ -13,3 +13,6 @@
 [submodule "B5000"]
 	path = B5000
 	url = https://github.com/awesome-cpus/b5000
+[submodule "PDP-8"]
+	path = PDP-8
+	url = https://github.com/awesome-cpus/pdp8
