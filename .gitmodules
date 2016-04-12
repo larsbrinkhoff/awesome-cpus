@@ -7,3 +7,6 @@
 [submodule "i860"]
 	path = i860
 	url = https://github.com/awesome-cpus/awesome-cpus-i860/
+[submodule "PIC"]
+	path = PIC
+	url = https://github.com/awesome-cpus/awesome-cpus-pic
