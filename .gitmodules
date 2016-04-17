@@ -10,3 +10,6 @@
 [submodule "PIC"]
 	path = PIC
 	url = https://github.com/awesome-cpus/awesome-cpus-pic
+[submodule "B5000"]
+	path = B5000
+	url = https://github.com/awesome-cpus/b5000
