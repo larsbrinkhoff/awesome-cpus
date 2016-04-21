@@ -1,0 +1,473 @@
+680x0bin.txt
+Instruction set of the 680x0 in binary order
+1988/WJvG
+
+0        1         2        3
+0000 000000 aaaaaa 00000000 dddddddd  ori.b   #datab,a
+0000 000000 111100 00000000 dddddddd  ori.b   #datab,ccr
+0000 000001 aaaaaa dddddddd dddddddd  ori.w   #dataw,a
+0000 000001 111100 dddddddd dddddddd  ori.w   #dataw,sr (sup)
+0000 000010 aaaaaa longword           ori.l   #datal,a
+0000 000011 aaaaaa nnnn0000 00000000  cmp2.b  a,Rn      (020)
+0000 000011 aaaaaa nnnn1000 00000000  chk2.b  a,Rn      (020)
+
+0000 001000 aaaaaa 00000000 dddddddd  andi.b  #datab,a
+0000 001000 111100 00000000 dddddddd  andi.b  #datab,ccr
+0000 001001 aaaaaa dddddddd dddddddd  andi.w  #dataw,a
+0000 001001 111100 dddddddd dddddddd  andi.w  #dataw,sr (sup)
+0000 001010 aaaaaa longword           andi.l  #datal,a
+0000 001011 aaaaaa nnnn0000 00000000  cmp2.w  a,Rn      (020)
+0000 001011 aaaaaa nnnn1000 00000000  chk2.w  a,Rn      (020)
+
+0000 010000 aaaaaa 00000000 dddddddd  subi.b  #datab,a
+0000 010001 aaaaaa dddddddd dddddddd  subi.w  #dataw,a
+0000 010010 aaaaaa longword           subi.l  #datal,a
+0000 010011 aaaaaa nnnn0000 00000000  cmp2.l  a,Rn      (020)
+0000 010011 aaaaaa nnnn1000 00000000  chk2.l  a,Rn      (020)
+
+0000 011000 aaaaaa 00000000 dddddddd  addi.b  #datab,a
+0000 011001 aaaaaa dddddddd dddddddd  addi.w  #dataw,a
+0000 011010 aaaaaa longword           addi.l  #datal,a
+0000 011011 00nnnn                    rtm     Rn        (020)
+0000 011011 aaaaaa 00000000 dddddddd  callm   #data8,a  (020)
+
+0000 100000 aaaaaa 00000000 000bbbbb  btst    #bitnr,a
+0000 100001 aaaaaa 00000000 000bbbbb  bchg    #bitnr,a
+0000 100010 aaaaaa 00000000 000bbbbb  bclr    #bitnr,a
+0000 100011 aaaaaa 00000000 000bbbbb  bset    #bitnr,a
+
+0000 101000 aaaaaa 00000000 dddddddd  eori.b  #datab,a
+0000 101000 111100 00000000 dddddddd  eori.b  #datab,ccr
+0000 101001 aaaaaa dddddddd dddddddd  eori.w  #dataw,a
+0000 101001 111100 dddddddd dddddddd  eori.w  #dataw,sr         (sup)
+0000 101010 aaaaaa longword           eori.l  #datal,a
+0000 101011 aaaaaa 0000000u uu000ccc  cas.b   Dc,Du,ea          (020)
+0000 101011 111100 nnnn000u uu000ccc  cas2.b  Dc1:Dc2,Du1:Du2,
+                   nnnn000u uu000ccc          (Rn):(Rn)         (020)
+
+0000 1100zz aaaaaa                    cmpi.z  #dataz,a
+0000 110011 aaaaaa 0000000u uu000ccc  cas.w   Dc,Du,ea          (020)
+0000 110011 111100 nnnn000u uu000ccc  cas2.w  Dc1:Dc2,Du1:Du2,
+                   nnnn000u uu000ccc          (Rn):(Rn)         (020)
+
+0000 1110zz aaaaaa nnnn0000 00000000  moves.z a,Rn              (010,sup)
+0000 1110zz aaaaaa nnnn1000 00000000  moves.z Rn,a              (010,sup)
+0000 111011 aaaaaa 0000000u uu000ccc  cas.l   Dc,Du,ea          (020)
+0000 111011 111100 nnnn000u uu000ccc  cas2.l  Dc1:Dc2,Du1:Du2,
+                   nnnn000u uu000ccc          (Rn):(Rn)         (020)
+
+0000 nnn100 aaaaaa                    btst    Dn,a
+0000 nnn101 aaaaaa                    bchg    Dn,a
+0000 ddd10z 001sss dddddddd dddddddd  movep.z data16(As),Dd
+0000 nnn110 aaaaaa                    bclr    Dn,a
+0000 nnn111 aaaaaa                    bset    Dn,a
+0000 sss11z 001ddd dddddddd dddddddd  movep.z Ds,data16(Ad)
+
+0001 dddddd ssssss                    move.b  as,ad  (dddddd reversed)
+0010 dddddd ssssss                    move.l  as,ad  (dddddd reversed)
+0010 ddd001 ssssss                    movea.l as,Ad
+0011 dddddd ssssss                    move.w  as,ad  (dddddd reversed)
+0011 ddd001 ssssss                    movea.w as,Ad
+     
+0100 0000zz aaaaaa                    negx.z  a
+0100 000011 aaaaaa                    move    SR,a   (010,sup)
+0100 0010zz aaaaaa                    clr.z   a
+0100 001011 aaaaaa                    move    CCR,a  (010)
+0100 0100zz aaaaaa                    neg.z   a
+0100 010011 aaaaaa                    move    a,CCR
+0100 0110zz aaaaaa                    not.z   a
+0100 011011 aaaaaa                    move    a,SR   (sup)
+
+0100 100000 aaaaaa                    nbcd    a
+0100 100000 001nnn dddddddd dddddddd  link    An,#disp32.l  (020)
+                   dddddddd dddddddd
+0100 100001 000nnn                    swap    Dn
+0100 100001 001vvv                    bkpt    #vector  (010)
+0100 100001 aaaaaa                    pea     a
+0100 10001z 000nnn                    ext.z   Dn
+0100 10001z aaaaaa a6543210 d6543210  movem.z reg-list,a  (rev in pred mode)
+
+0100 1010zz aaaaaa                    tst.z   a
+0100 101011 aaaaaa                    tas     a
+0100 101011 111100                    illegal
+
+0100 101011 111010                    bgnd               (cpu32)
+
+0100 110000 aaaaaa 0lll0000 0000hhhh  mulu.l  a,Dl       (020)
+0100 110000 aaaaaa 0lll0100 0000hhhh  mulu.q  a,Dh:Dl    (020)
+0100 110000 aaaaaa 0lll1000 0000hhhh  muls.l  a,Dl       (020)
+0100 110000 aaaaaa 0lll1100 0000hhhh  muls.q  a,Dh:Dl    (020)
+0100 110001 aaaaaa 0qqq0000 00000rrr  divu.l  a,Dq       (020)
+0100 110001 aaaaaa 0qqq0100 00000rrr  divu.q  a,Dr:Dq    (020)
+0100 110001 aaaaaa 0qqq1000 00000rrr  divs.l  a,Dq       (020)
+0100 110001 aaaaaa 0qqq1100 00000rrr  divs.q  a,Dr:Dq    (020)
+0100 11001z aaaaaa a6543210 d6543210  movem.z a,reg-list  (rev in pred mode)
+
+0100 111001 00vvvv                    trap    #vector
+0100 111001 010nnn dddddddd dddddddd  link    An,data16
+0100 111001 011nnn                    unlk    An
+0100 111001 100nnn                    move    An,USP     (sup)
+0100 111001 101nnn                    move    USP,An     (sup)
+0100 111001 110000                    reset              (sup)
+0100 111001 110001                    nop
+0100 111001 110010 dddddddd dddddddd  stop    #data16    (sup)
+0100 111001 110011                    rte                (sup)
+0100 111001 110100                    rtd                (010)
+0100 111001 110101                    rts
+0100 111001 110110                    trapv
+0100 111001 110111                    rtr
+
+0100 111001 111010 nnnn0000 00000000  movec SFC,Rn       (010,sup)
+0100 111001 111010 nnnn0000 00000001  movec DFC,Rn       (010,sup)
+0100 111001 111010 nnnn0000 00000010  movec CACR,Rn      (020,sup)
+0100 111001 111010 nnnn1000 00000000  movec USP,Rn       (010,sup)
+0100 111001 111010 nnnn1000 00000001  movec VBR,Rn       (010,sup)
+0100 111001 111010 nnnn1000 00000010  movec CAAR,Rn      (020,sup)
+0100 111001 111010 nnnn1000 00000011  movec MSP,Rn       (020,sup)
+0100 111001 111010 nnnn1000 00000100  movec ISP,Rn       (020,sup)
+
+0100 111001 111011 nnnn0000 00000000  movec Rn,SFC       (010,sup)
+0100 111001 111011 nnnn0000 00000001  movec Rn,DFC       (010,sup)
+0100 111001 111011 nnnn0000 00000010  movec Rn,CACR      (020,sup)
+0100 111001 111011 nnnn1000 00000000  movec Rn,USP       (010,sup)
+0100 111001 111011 nnnn1000 00000001  movec Rn,VBR       (010,sup)
+0100 111001 111011 nnnn1000 00000010  movec Rn,CAAR      (020,sup)
+0100 111001 111011 nnnn1000 00000011  movec Rn,MSP       (020,sup)
+0100 111001 111011 nnnn1000 00000100  movec Rn,ISP       (020,sup)
+
+0100 nnn100 aaaaaa                    chk.l   a,Dn       (020)
+0100 nnn110 aaaaaa                    chk.w   a,Dn
+0100 nnn111 aaaaaa                    lea     a,An
+0100 100111 000nnn                    extb    Dn         (020)
+
+0100 111010 aaaaaa                    jsr     a
+0100 111011 aaaaaa                    jmp     a
+
+0101 ddd0zz aaaaaa                    addq.z  #data3,a (data3 = 8,1..7)
+0101 ddd1zz aaaaaa                    subq.z  #data3,a (data3 = 8,1..7)
+0101 cccc11 aaaaaa                    sCC     a
+0101 cccc11 001nnn llllllll llllllll  dbCC    Dn,label
+0101 cccc11 111010 dddddddd dddddddd  trapCC  #operand.w  (020)
+0101 cccc11 111011 longword           trapCC  #operand.l  (020)
+0101 cccc11 111100                    trapCC              (020)
+
+0110 0000 llllllll                    bra     label
+0110 0001 llllllll                    bsr     label
+0110 cccc llllllll                    bCC     label
+
+0111 nnn0 dddddddd                    moveq   #data8,Dn
+
+1000 nnn0zz aaaaaa                    or.z    a,Dn
+1000 nnn011 aaaaaa                    divu.w  a,Dn
+1000 nnn1zz aaaaaa                    or.z    Dn,a
+1000 nnn111 aaaaaa                    divs.w  a,Dn
+1000 ddd100 000sss                    sbcd    Ds,Dd
+1000 ddd100 001sss                    sbcd    -(As),-(Ad)
+
+1000 ddd101 000sss dddddddd dddddddd  pack    Ds,Dd,#adj        (020)
+1000 ddd101 001sss dddddddd dddddddd  pack    -(As),-(Ad),#adj  (020)
+1000 ddd110 000sss dddddddd dddddddd  unpk    Ds,Dd,#adj        (020)
+1000 ddd110 001sss dddddddd dddddddd  unpk    -(As),-(Ad),#adj  (020)
+
+1001 nnn0zz aaaaaa                    sub.z   a,Dn
+1001 nnn1zz aaaaaa                    sub.z   Dn,a
+1001 nnnz11 aaaaaa                    suba.z  a,An
+1001 ddd1zz 000sss                    subx.z  Ds,Dd
+1001 ddd1zz 001sss                    subx.z  -(As),-(Ad)
+
+1011 nnn0zz aaaaaa                    cmp.z   a,Dn
+1011 nnn1zz aaaaaa                    eor.z   a,Dn
+1011 nnnz11 aaaaaa                    cmpa.z  a,An
+1011 ddd1zz 000sss                    cmpm.z  Ds,Dd
+1011 ddd1zz 001sss                    cmpm.z  (As)+,(Ad)+
+
+1100 nnn0zz aaaaaa                    and.z   a,Dn
+1100 nnn011 aaaaaa                    mulu.w  a,Dn
+1100 nnn1zz aaaaaa                    and.z   Dn,a
+1100 nnn111 aaaaaa                    muls.w  a,Dn
+1100 ddd100 000sss                    abcd    Ds,Dd
+1100 ddd100 001sss                    abcd    -(As),-(Ad)
+1100 ddd101 000sss                    exg     Ds,Dd
+1100 ddd101 001sss                    exg     As,Ad
+1100 ddd110 001sss                    exg     As,Dd
+
+1101 nnn0zz aaaaaa                    add.z   a,Dn
+1101 nnn1zz aaaaaa                    add.z   Dn,a
+1101 nnnz11 aaaaaa                    adda.z  a,An
+1101 ddd1zz 000sss                    addx.z  Ds,Dd
+1101 ddd1zz 001sss                    addx.z  -(As),-(Ad)
+
+1110 ccc0zz 000nnn                    asrd.z  #ccc,Dn
+1110 ccc1zz 000nnn                    asld.z  #ccc,Dn
+1110 ccc0zz 001nnn                    lsrd.z  #ccc,Dn
+1110 ccc1zz 001nnn                    lsld.z  #ccc,Dn
+1110 ccc0zz 010nnn                    roxrd.z #ccc,Dn
+1110 ccc1zz 010nnn                    roxld.z #ccc,Dn
+1110 ccc0zz 011nnn                    rord.z  #ccc,Dn
+1110 ccc1zz 011nnn                    rold.z  #ccc,Dn
+
+1110 ccc0zz 100nnn                    asrd.z  Dc,Dn
+1110 ccc1zz 100nnn                    asld.z  Dc,Dn
+1110 ccc0zz 101nnn                    lsrd.z  Dc,Dn
+1110 ccc1zz 101nnn                    lsld.z  Dc,Dn
+1110 ccc0zz 110nnn                    roxrd.z Dc,Dn
+1110 ccc1zz 110nnn                    roxld.z Dc,Dn
+1110 ccc0zz 111nnn                    rord.z  Dc,Dn
+1110 ccc1zz 111nnn                    rold.z  Dc,Dn
+
+1110 000011 aaaaaa                    asrd    a
+1110 000111 aaaaaa                    asld    a
+1110 001011 aaaaaa                    lsrd    a
+1110 001111 aaaaaa                    lsld    a
+1110 010011 aaaaaa                    roxrd   a
+1110 010111 aaaaaa                    roxld   a
+1110 011011 aaaaaa                    rord    a
+1110 011111 aaaaaa                    rold    a
+
+1110 100011 aaaaaa 0000dooo oofwwwww  bftst  a[offs:wid]     (020)
+1110 100111 aaaaaa 0nnndooo oofwwwww  bfextu a[offs:wid],Dn  (020)
+1110 101011 aaaaaa 0000dooo oofwwwww  bfchg  a[offs:wid]     (020)
+1110 101111 aaaaaa 0nnndooo oofwwwww  bfexts a[offs:wid],Dn  (020)
+1110 110011 aaaaaa 0000dooo oofwwwww  bfclr  a[offs:wid]     (020)
+1110 110111 aaaaaa 0nnndooo oofwwwww  bfffo  a[offs:wid],Dn  (020)
+1110 111011 aaaaaa 0000dooo oofwwwww  bfset  a[offs:wid]     (020)
+1110 111111 aaaaaa 0nnndooo oofwwwww  bfins  Dn,a[offs:wid]  (020)
+
+1111 000000 aaaaaa 0000100f 00000000  pmove[fd] a,tt0        (030,sup)
+1111 000000 aaaaaa 0000110f 00000000  pmove[fd] a,tt1        (030,sup)
+1111 000000 aaaaaa 0000101f 00000000  pmove     tt0,a        (030,sup)
+1111 000000 aaaaaa 0000111f 00000000  pmove     tt1,a        (030,sup)
+
+1111 000000 aaaaaa 001000r0 000fffff  pload    fc,a          (851,030,sup)
+
+1111 000000 aaaaaa 00100100 mmmfffff  pflusha                (851,sup)
+1111 000000 aaaaaa 00110000 mmmfffff  pflush   fc,#mask      (851,sup)
+1111 000000 aaaaaa 00111000 mmmfffff  pflush   fc,#mask,a    (851,sup)
+
+1111 000000 aaaaaa 0100000f 00000000  pmove[fd] a,tc         (030,sup)
+1111 000000 aaaaaa 0100100f 00000000  pmove[fd] a,srp        (030,sup)
+1111 000000 aaaaaa 0100110f 00000000  pmove[fd] a,crp        (030,sup)
+1111 000000 aaaaaa 0100001f 00000000  pmove     tc,a         (030,sup)
+1111 000000 aaaaaa 0100101f 00000000  pmove     srp,a        (030,sup)
+1111 000000 aaaaaa 0100111f 00000000  pmove     crp,a        (030,sup)
+
+1111 000000 aaaaaa 01000000 00000000  pmove     a,tc         (851,sup)
+1111 000000 aaaaaa 01000100 00000000  pmove     a,drp        (851,sup)
+1111 000000 aaaaaa 01001000 00000000  pmove     a,srp        (851,sup)
+1111 000000 aaaaaa 01001100 00000000  pmove     a,crp        (851,sup)
+1111 000000 aaaaaa 01010000 00000000  pmove     a,cal        (851,sup)
+1111 000000 aaaaaa 01010100 00000000  pmove     a,val        (851,sup)
+1111 000000 aaaaaa 01011000 00000000  pmove     a,scc        (851,sup)
+1111 000000 aaaaaa 01011100 00000000  pmove     a,ac         (851,sup)
+1111 000000 aaaaaa 01000010 00000000  pmove     tc,a         (851,sup)
+1111 000000 aaaaaa 01000110 00000000  pmove     drp,a        (851,sup)
+1111 000000 aaaaaa 01001010 00000000  pmove     srp,a        (851,sup)
+1111 000000 aaaaaa 01001110 00000000  pmove     crp,a        (851,sup)
+1111 000000 aaaaaa 01010010 00000000  pmove     cal,a        (851,sup)
+1111 000000 aaaaaa 01010110 00000000  pmove     val,a        (851,sup)
+1111 000000 aaaaaa 01011010 00000000  pmove     scc,a        (851,sup)
+1111 000000 aaaaaa 01011110 00000000  pmove     ac,a         (851,sup)
+
+1111 000000 aaaaaa 01100000 00000000  pmove     a,mmusr      (030,sup)
+1111 000000 aaaaaa 01100010 00000000  pmove     mmusr,a      (030,sup)
+
+1111 000000 aaaaaa 100lll00 000fffff  ptestw   fc,a,#level      (851,030,sup)
+1111 000000 aaaaaa 100lll10 000fffff  ptestr   fc,a,#level      (851,030,sup)
+1111 000000 aaaaaa 100lll01 rrrfffff  ptestw   fc,a,#level,An   (851,030,sup)
+1111 000000 aaaaaa 100lll11 rrrfffff  ptestr   fc,a,#level,An   (851,030,sup)
+
+1111 000000 aaaaaa 10100000 00000000  pflushr  a                (851,sup)
+
+1111 000001 001nnn 00000000 00cccccc  pdbCC.w  Dn,label         (851,sup)
+1111 000001 aaaaaa 00000000 00cccccc  psCC                      (851,sup)
+1111 00001z cccccc w [w]              pbCC.z   label            (851,sup)
+1111 000100 aaaaaa                    psave     a               (851,sup)
+1111 000101 aaaaaa                    prestore  a               (851,sup)
+
+1111 001000 aaaaaa 011nnnmmm kkkkkkk  fmove.p   fpm,a{,Dn|#k}   (88x,040)
+
+1111 010000 000nnn                    pflushn  (An)          (040,sup)
+1111 010000 001nnn                    pflush   (An)          (040,sup)
+1111 010000 010nnn                    pflushan               (040,sup)
+1111 010000 011nnn                    pflusha                (040,sup)
+
+1111 0100cc 001nnn                    cinvl    caches,(An)      (sup,040)
+1111 0100cc 010nnn                    cinvp    caches,(An)      (sup,040)
+1111 0100cc 011nnn                    cinva    caches           (sup,040)
+1111 0100cc 101nnn                    cpushl   caches,(An)      (sup,040)
+1111 0100cc 110nnn                    cpushp   caches,(An)      (sup,040)
+1111 0100cc 111nnn                    cpusha   caches           (sup,040)
+
+1111 010101 001nnn                    ptestw   An               (040,sup)
+1111 010101 101nnn                    ptestr   An               (040,sup)
+
+1111 100000 000000 00000001 11000000  lpstop #data        (cpu32)
+
+1111 100000 000mmm 0xxx0000 zz000yyy  tblu.z   Dym:Dyn,Dx
+1111 100000 000mmm 0xxx0100 zz000yyy  tblun.z  Dym:Dyn,Dx
+1111 100000 aaaaaa 0xxx0001 zz000000  tblu.z   a,Dx
+1111 100000 aaaaaa 0xxx0101 zz000000  tblun.z  a,Dx
+1111 100000 000mmm 0xxx1000 zz000yyy  tbls.z   Dym:Dyn,Dx
+1111 100000 000mmm 0xxx1100 zz000yyy  tblsn.z  Dym:Dyn,Dx
+1111 100000 aaaaaa 0xxx1001 zz000000  tbls.z   a,Dx
+1111 100000 aaaaaa 0xxx1101 zz000000  tblsn.z  a,Dx
+
+1111 100001 111010 00000000 00cccccc  ptrapCC  #oper.w          (851)
+1111 100001 111011 00000000 00cccccc  ptrapCC  #oper.l          (851)
+1111 100001 111100 00000000 00cccccc  ptrapCC                   (851)
+
+1111 ccc000 aaaaaa                    CPgen     a,user-defined  (020)
+1111 ccc001 aaaaaa 00000000 00cccccc  CPsCC                     (020)
+1111 ccc001 001nnn 00000000 00cccccc  CPdbCC    Dn,disp16       (020)
+1111 ccc001 111010 00000000 00cccccc  CPtrapCC  #oper.w         (020)
+1111 ccc001 111011 00000000 00cccccc  CPtrapCC  #oper.l         (020)
+1111 ccc001 111100 00000000 00cccccc  CPtrapCC                  (020)
+1111 ccc01z cccccc dddddddd dddddddd  CPbCC.z   disp16          (020)
+1111 ccc100 aaaaaa                    CPsave    a               (020,sup)
+1111 ccc101 aaaaaa                    CPrestore a               (020,sup)
+
+1111 ccc000 000000 010111nnn rrrrrrr  fmovecr.l #ccc,fpn        (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0000001  fint.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0000010  fsinh.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0000011  fintrz.z  fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0000110  flognp1.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0001001  ftanh.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0001010  fatan.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0001100  fasin.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0001101  fatanh.z  fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0001110  fsin.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0001111  ftan.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0010000  fetox.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0010001  ftwotox.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0010010  ftentox.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0010100  flogn.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0010101  flog10.z  fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0010110  flog2.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0011001  fcosh.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0011100  facos.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0011101  fcos.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0011110  fgetexp.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0011111  fgetman.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0100001  fmod.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0100100  fsgldiv.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0100101  frem.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0100110  fscale.z  fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0100111  fsglmul.z fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmsss 0110ccc  fsincos.z fpm/a,fpc:fps   (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0111000  fcmp.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn 0111010  ftst.z    fpm/a           (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g???d??  fabs.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g000d00  fmove.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g000d0x  fsqrt.z   fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g011d10  fneg.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g100d00  fdiv.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g100d10  fadd.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g100d11  fmul.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 0r0mmmnnn g101d00  fsub.z    fpm/a,fpn       (88x,040)
+1111 ccc000 aaaaaa 100001000 0000000  fmove.l   a,fpiar         (88x,040)
+1111 ccc000 aaaaaa 100010000 0000000  fmove.l   a,fpsr          (88x,040)
+1111 ccc000 aaaaaa 100100000 0000000  fmove.l   a,fpcr          (88x,040)
+1111 ccc000 aaaaaa 100csi00 00000000  fmovem.z  a,list          (88x,040)
+1111 ccc000 aaaaaa 101001000 0000000  fmove.l   fpiar,a         (88x,040)
+1111 ccc000 aaaaaa 101010000 0000000  fmove.l   fpsr,a          (88x,040)
+1111 ccc000 aaaaaa 101100000 0000000  fmove.l   fpcr,a          (88x,040)
+1111 ccc000 aaaaaa 101csi00 00000000  fmovem.z  list,a          (88x,040)
+1111 ccc000 aaaaaa 110m0000 rrrrrrrr  fmovem.z  a,list          (88x,040)
+1111 ccc000 aaaaaa 110m1000 0nnn0000  fmovem.z  a,Dn            (88x,040)
+1111 ccc000 aaaaaa 111m0000 rrrrrrrr  fmovem.z  list,a          (88x,040)
+1111 ccc000 aaaaaa 111m1000 0mmm0000  fmovem.z  Dm,a            (88x,040)
+1111 ccc001 001nnn 00000000 00cccccc  fdbCC.z   Dn,disp16       (88x,040)
+1111 ccc001 111010 00000000 00cccccc  ftrapCC   #oper.w         (88x,040)
+1111 ccc001 111011 00000000 00cccccc  ftrapCC   #oper.l         (88x,040)
+1111 ccc001 111100 00000000 00cccccc  ftrapCC                   (88x,040)
+1111 ccc001 aaaaaa 00000000 00cccccc  fsCC.b                    (88x,040)
+1111 ccc010 000000 00000000 00000000  fnop                      (88x,040)
+1111 ccc01z cccccc dddddddd dddddddd  fbCC.z    disp16          (88x,040)
+1111 ccc100 aaaaaa                    fsave     a               (88x,040,sup)
+1111 ccc101 aaaaaa                    frestore  a               (88x,040,sup)
+
+coprocessor primitives (020)
+
+1p100100 00000000  busy
+cpd00001 llllllll  transfer multiple coprocessor registers
+cpd0001s 00000000  transfer status register and scanpc
+1p000100 00000000  supervisor check
+cpd00110 00000000  transfer multiple processor registers
+cp000111 00000000  transfer operation word
+cp00100i 000000ft  null
+cp001010 00000000  evaluate and transfer effective address
+cpd01100 0000nnnn  transfer single main processor register
+cpd01101 00000000  transfer main processor control register
+cpd1110l llllllll  transfer to/from top of stack
+cp001111 llllllll  transfer from instruction stream
+cpd10aaa llllllll  evaluate effective address and transfer data
+0p011101 vvvvvvvv  take mid-instruction exception
+0p011110 vvvvvvvv  take post-instruction exception
+cp100000 llllllll  write to previously evaluated effective address
+
+subfields:
+
+ddd                                   data3 (1..8)
+zz                                    00=b, 01=w, 10=l
+ss                                    01=b, 10=w, 11=l
+z                                     0=w, 1=l
+s                                     0=l, 1=w
+llllllll                              if $00 -> 16 bits label follows
+llllllll                              if $ff -> 32 bits label follows (020)
+d                                     bitfields: 0 offset is imm, 1 offs = Dr
+f                                     bitfields: 0 width is imm, 1 width = Dr
+
+addressing modes (aaaaaa):
+
+000 nnn                     Dn
+001 nnn                     An
+010 nnn                     (An)
+011 nnn                     (An)+
+100 nnn                     -(An)
+101 nnn  dddddddd dddddddd  (d16,An)  
+110 nnn  iiiiz000 dddddddd  (d8,An,Ri.z)
+         iiiizss0 dddddddd  (d8,An,Ri.z*scale)  (020)
+         iiiizss1 bfxx0iii  (bd,An,Ri.z*scale)  (020)
+                  1         1 = base register suppressed
+                   1        1 = index operand suppressed
+                    xx      base disp size (01=null disp, 10=word, 11=long)
+                   0   000  ( bd,An,Ri.z*scale      )
+                   0   001  ([bd,An,Ri.z*scale]     )
+                   0   010  ([bd,An,Ri.z*scale],od.w)
+                   0   011  ([bd,An,Ri.z*scale],od.l)
+                   0   100  reserved
+                   0   101  ([bd,An],Ri.z*scale     )
+                   0   110  ([bd,An],Ri.z*scale,od.w)
+                   0   111  ([bd,An],Ri.z*scale,od.l)
+                   1   000  ( bd,An                 )
+                   1   001  ([bd,An]                )
+                   1   010  ([bd,An]           ,od.w)
+                   1   011  ([bd,An]           ,od.l)
+111 000  dddddddd dddddddd  addr16
+111 001  longword           addr32
+111 010  dddddddd dddddddd  d16(PC)
+111 011  iiiiz000 dddddddd  d8(PC,ix)
+         iiiizss0 dddddddd  d8(PC,ix*scale)  (020)
+         iiiizss1 bfxx0iii  d8(PC,ix*scale)  (020)
+111 100                     imm/implied
+
+flags:
+
+0000  t   allways
+0001  f   never
+0010  hi
+0011  ls
+0100  cc
+0101  cs
+0110  ne
+0111  eq
+1000  vc
+1001  vs
+1010  pl
+1011  mi
+1100  ge
+1101  lt
+1110  gt
+1111  le
+
+
