@@ -1,0 +1,240 @@
+----------------------------------------------------------------
+|                                                              |
+|                                                              |
+|                           Rockwell                           |
+|                                                              |
+|         666     5555555     CCCC      000      22222         |
+|        6        5          C    C    0   0    2     2        |
+|       6         5         C         0   0 0        2         |
+|       666666    555555    C         0  0  0     222          |
+|       6     6         5   C         0 0   0    2             |
+|       6     6         5    C    C    0   0    2              |
+|        66666    555555      CCCC      000     2222222        |
+|                                                              |
+|      65C02 CMOS MICROPROCESSOR Instruction Set Summary       |
+|                                                              |
+|                                                              |
+|                                                              |
+|                                                              |
+|                                                              |
+|                    _________    _________                    |
+|                  _|         \__/         |_  ___             |
+|             Vss |_|1                   40|_| RES <--         |
+|                  _|                      |_                  |
+|         --> RDY |_|2                   39|_| CLK2 -->        |
+|                  _|                      |_                  |
+|        <-- CLK1 |_|3                   38|_| NC              |
+|             ___  _|                      |_                  |
+|         --> IRQ |_|4                   37|_| CLK0 <--        |
+|                  _|                      |_                  |
+|              NC |_|5                   36|_| NC              |
+|             ___  _|                      |_                  |
+|         --> NMI |_|6                   35|_| NC              |
+|                  _|                      |_    _             |
+|        --> SYNC |_|7                   34|_| R/W -->         |
+|                  _|                      |_                  |
+|             Vcc |_|8                   33|_| DB7 <-->        |
+|                  _|                      |_                  |
+|          <-- A0 |_|9                   32|_| DB6 <-->        |
+|                  _|                      |_                  |
+|          <-- A1 |_|10      65C02       31|_| DB5 <-->        |
+|                  _|                      |_                  |
+|          <-- A2 |_|11                  30|_| DB4 <-->        |
+|                  _|                      |_                  |
+|          <-- A3 |_|12                  29|_| DB3 <-->        |
+|                  _|                      |_                  |
+|          <-- A4 |_|13                  28|_| DB2 <-->        |
+|                  _|                      |_                  |
+|          <-- A5 |_|14                  27|_| DB1 <-->        |
+|                  _|                      |_                  |
+|          <-- A6 |_|15                  26|_| DB0 <-->        |
+|                  _|                      |_                  |
+|          <-- A7 |_|16                  25|_| A15 -->         |
+|                  _|                      |_                  |
+|          <-- A8 |_|17                  24|_| A14 -->         |
+|                  _|                      |_                  |
+|          <-- A9 |_|18                  23|_| A13 -->         |
+|                  _|                      |_                  |
+|         <-- A10 |_|19                  22|_| A12 -->         |
+|                  _|                      |_                  |
+|         <-- A11 |_|20                  21|_| Vss             |
+|                   |______________________|                   |
+|                                                              |
+|                                                              |
+|                                                              |
+|                                                              |
+|                                                              |
+|                                                              |
+|Written by     Jonathan Bowen                                 |
+|               Programming Research Group                     |
+|               Oxford University Computing Laboratory         |
+|               8-11 Keble Road                                |
+|               Oxford OX1 3QD                                 |
+|               England                                        |
+|                                                              |
+|               Tel +44-865-273840                             |
+|                                                              |
+|Created        November 1984                                  |
+|Updated        April 1985                                     |
+|Issue          1.1                Copyright (C) J.P.Bowen 1985|
+----------------------------------------------------------------
+----------------------------------------------------------------
+|Mnem. |Op|NVBDIZC|A#ZBIRX@|~|Description          |Notes      |
+|------+--+-------+--------+-+---------------------+-----------|
+|ADC  s|6D|**---**| XxX  XX|4|Add with Carry       |A=A+s+C   %|
+|AND  s|2D|*----*-| XxX  XX|4|Logical AND          |A=A&s     %|
+|ASL  d|0E|*----**|  xx    |6|Arith. Shift Left    |d={C,d,0}<-|
+|ASLA  |0A|*----**|X       |2|Arith. Shift Left    |A={C,d,0}<-|
+|BBRb z|0F|-------|  *  X  |2|Branch if Bit Reset  |If s<b>=0  |
+|BBSb z|8F|-------|  *  X  |2|Branch if Bit Set    |If s<b>=1  |
+|BCC  a|90|-------|     X  |2|Branch if Carry Clear|If C=0(4~)%|
+|BCS  a|B0|-------|     X  |2|Branch if Carry Set  |If C=1(4~)%|
+|BEQ  a|F0|-------|     X  |2|Branch if Equal      |If Z=1(4~)%|
+|BIT  s|2C|**---*-| Xxx    |4|Bit Test             |A&s       $|
+|BMI  a|30|-------|     X  |2|Branch if Minus      |If N=1(4~)%|
+|BNE  a|D0|-------|     X  |2|Branch if Not Equal  |If Z=0(4~)%|
+|BPL  a|10|-------|     X  |2|Branch if Plus       |If N=0(4~)%|
+|BRA  a|80|-------|     X  |2|Branch Always        |PC=a  (4~)%|
+|BRK   |00|--+-1--|    X   |7|Break(-[S]={PC+2,P}) |PC=[FFFEH] |
+|BVC  a|50|-------|     X  |2|Branch if Overflw Clr|If V=0(4~)%|
+|BVS  a|70|-------|     X  |2|Branch if Overflw Set|If V=1(4~)%|
+|CLC   |18|------0|    X   |2|Clear Carry flag     |C=0        |
+|CLD   |D8|---0---|    X   |2|Clear Decimal mode   |D=0        |
+|CLI   |58|----0--|    X   |2|Clear Int. disable   |I=0        |
+|CLV   |B8|-0-----|    X   |2|Clear Overflow flag  |V=0        |
+|CMP  s|CD|*----**| XxX  XX|4|Compare              |A-s        |
+|CPX  s|EC|*----**| X**    |4|Compare index reg.   |X-s        |
+|CPY  s|CC|*----**| X**    |4|Compare index reg.   |Y-s        |
+|DEC  d|CE|*----*-|  xx    |6|Decrement            |d=d-1      |
+|DECA  |3A|*----*-|X       |6|Decrement Acc.       |A=A-1      |
+|DEX   |CA|*----*-|    X   |2|Decrement index reg. |X=X-1      |
+|DEY   |88|*----*-|    X   |2|Decrement index reg. |Y=Y-1      |
+|EOR  s|4D|*----*-| XxX  XX|4|Logical Exclusive OR |A=Axs     %|
+|INC  d|EE|*----*-|  xx    |6|Increment            |d=d+1      |
+|INCA  |1A|*----*-|X       |6|Increment Acc.       |A=A+1      |
+|INX   |E8|*----*-|    X   |2|Increment index reg. |X=X+1      |
+|INY   |C8|*----*-|    X   |2|Increment index reg. |Y=Y+1      |
+|JMP  s|4C|-------|   *   X|3|Jump                 |PC=s      $|
+|JSR  s|20|-------|   *    |6|Jump to Subroutine   |-[S]=PC+2=s|
+|LDA  s|AD|*----*-| XxX  XX|4|Load Accumulator     |A=s       %|
+|LDX  s|AE|*----*-| Xyy    |4|Load index register  |X=s      $%|
+|LDY  s|AC|*----*-| Xxx    |4|Load index register  |Y=s       %|
+|LSR  d|4E|0----**|  xx    |6|Logical Shift Right  |d=->{0,d,C}|
+|LSRA  |4A|0----**|X       |2|Logical Shift Right  |A=->{0,A,C}|
+|NOP   |EA|-------|    X   |2|No Operation         |           |
+|ORA  s|0D|*----*-| XxX  XX|4|Logical Inclusive OR |A=Avs      |
+|PHA   |48|-------|    X   |3|Push Accumulator     |-[S]=A     |
+|PHP   |08|-------|    X   |3|Push status register |-[S]=P     |
+|PHX   |DA|-------|    X   |2|Push index register  |-[S]=X     |
+|PHY   |5A|-------|    X   |2|Push index register  |-[S]=Y     |
+|PLA   |68|-------|    X   |4|Pull Accumulator     |A=[S]+     |
+|PLP   |28|*******|    X   |4|Pull status register |P=[S]+     |
+|PLX   |FA|-------|    X   |2|Pull index register  |X=[S]+     |
+|PLY   |7A|-------|    X   |2|Pull index register  |Y=[S]+     |
+|RMBb d|07|-------|  *     |5|Reset Memory Bit     |d<b>=0     |
+|ROL  d|2E|*----**|  xx    |6|Rotate Left          |d={C,d}<-  |
+|ROLA  |2A|*----**|X       |2|Rotate Left Acc.     |A={C,A}<-  |
+|ROR  d|6E|*----**|  xx    |6|Rotate Right         |d=->{C,d}  |
+|RORA  |6A|*----**|X       |2|Rotate Right Acc.    |A=->{C,A}  |
+|RTI   |40|*******|    X   |6|Return from Interrupt|{PC,P}=[S]+|
+|RTS   |60|-------|    X   |6|Return from Subr.    |PC={[S]+}+1|
+|SBC  s|ED|*----**| XxX  XX|4|Subtract with Carry  |A=A-s-C   %|
+|SEC   |38|------1|    X   |2|Set Carry flag       |C=1        |
+|SED   |F8|---1---|    X   |2|Set Decimal mode     |D=1        |
+|SEI   |78|----1--|    X   |2|Set Interrupt disable|I=1        |
+|SMBb d|87|-------|  *     |5|Set Memory Bit       |d<b>=1     |
+|STA  d|8D|-------|  xX  XX|4|Store Accumulator    |d=A        |
+|STX  d|8E|-------|  y*    |4|Store index register |d=X        |
+|STY  d|8C|-------|  x*    |4|Store index register |d=Y        |
+|STZ  d|9C|-------|  xx    |4|Store Zero           |d=0       $|
+|TAX   |AA|*----*-|    X   |2|Transfer Accumulator |X=A        |
+|TAY   |A8|*----*-|    X   |2|Transfer Accumulator |Y=A        |
+|TRB  d|1C|**---*-|  **    |2|Test and Reset Bits  |d=~A&d     |
+|TSB  d|0C|**---*-|  **    |2|Test and Set Bits    |d=Avd      |
+|TSX   |BA|*----*-|    X   |2|Transfer Stack ptr   |X=S        |
+|TXA   |8A|*----*-|    X   |2|Transfer index reg.  |A=X        |
+|TXS   |9A|-------|    X   |2|Transfer index reg.  |S=X        |
+|TYA   |98|*----*-|    X   |2|Transfer index reg.  |A=Y        |
+|------+--+-------+--------+-+---------------------------------|
+|      |XX|       |        |X|Hexadecimal opcode/no. of cycles |
+----------------------------------------------------------------
+----------------------------------------------------------------
+|Mnemonic |NVBDIZC|A#ZBIRX@|Description                        |
+|---------+-------+--------+-----------------------------------|
+| P       |-*01+  |        |Unaff/affected/reset/set/stack set |
+| N       |N      |        |Negative status (Bit 7)            |
+| V       | V     |        |Overflow status (Bit 6)            |
+| B       |  B    |        |Break command indicator (Bit 4)    |
+| D       |   D   |        |Decimal mode control (Bit 3)       |
+| I       |    I  |        |Interrupt disable control (Bit 2)  |
+| Z       |     Z |        |Zero status (Bit 1)                |
+| C       |      C|        |Carry status (Bit 0)               |
+|------------------+--------+----------------------------------|
+|                 |*       |Only non-indexed mode valid        |
+|                 |x       |X and non-indexed mode valid       |
+|                 |y       |Y and non-indexed mode valid       |
+|                 |X       |All modes valid                    |
+|-----------------+--------+-----------------------------------|
+|                 |        |Add XXH to opcode          |+XXH|  |
+|                 |        |Subtract XXH from opcode   |-XXH|  |
+|                 |        |Add X to number of cycles  |    |+X|
+|                 |        |Subtract X from cycles     |    |-X|
+|-----------------+--------+---------------------------+----+--|
+| b               |        |Bit number (b=0-7)         |+b0H|  |
+| A               |A       |Accumulator                |    |  |
+| #n              | #      |Immediate                  |-0CH|-2|
+| #n              | #      | ditto (opcode = XDH)      | X9H| 2|
+| BIT #n          | #      | ditto (special case)      | 89H| 2|
+| <n              |  Z     |Zero page                  |-08H|-1|
+| STZ n           |  Z     | ditto (special case)      | 64H| 3|
+| n               |  *     |Zero page (direct mode)    |-08H|-1|
+| n,X             |  x     |Zero page indexed (X)      |+08H|+0|
+| n,Y             |  y     |Zero Page indexed (Y)      |+08H|+0|
+| >nn             |   B    |Absolute                   |+00H|+0|
+| nn              |   *    |Absolute (extended mode)   |+00H|+0|
+| nn,X            |   x    |Absolute indexed (X)       |+10H|+0|
+| nn,Y            |   y    |Absolute indexed (Y)       |+0CH|+0|
+| LDX nn,Y        |   y    | ditto (special case)      | BEH| 4|
+|                 |    I   |Implicit                   |    |  |
+| a               |     R  |Relative (PC=PC+1+offset)  |    |+2|
+| [nn,X]          |      x |Indexed indirect (X)       |-0CH|+2|
+| [nn],Y          |      y |Indirect indexed (Y)       |+04H|+1|
+| [nn]            |       @|Absolute indirect          |+05H|+1|
+| JMP [nn]        |       @| ditto (special case)      | 6CH| 5|
+|--------------------------+-----------------------------------|
+| A                        |Accumulator (8-bit)                |
+| P                        |Processor status register (8-bit)  |
+| PC                       |Program Counter (16-bit)           |
+| S                        |Stack pointer (9-bit, MSB=1)       |
+| X                        |Index register X (8-bit)           |
+| Y                        |Index register Y (8-bit)           |
+|--------------------------+-----------------------------------|
+| a                        |Relative address (-128 to +127)    |
+| b                        |Bit number (0 to 7)                |
+| d                        |Destination                        |
+| n                        |8-bit expression (0 to 255)        |
+| nn                       |16-bit expression (0 to 65535)     |
+| s                        |Source                             |
+| z                        |Zero page, relative address (n,a)  |
+|--------------------------+-----------------------------------|
+| +   -                    |Arithmetic addition/subtraction    |
+| *   /                    |Arithmetic multiplication/division |
+| &   ~                    |Logical AND/NOT                    |
+| v   x                    |Logical inclusive/exclusive OR     |
+| <-  ->                   |Rotate left/right                  |
+| [ ]                      |Indirect addressing                |
+| [ ]+                     |Post-increment indirect addressing |
+| -[ ]                     |Pre-decrement indirect addressing  |
+| { }                      |Combination of operands            |
+| < >                      |Bit number                         |
+| $                        |Special case for addressing mode   |
+| %                        |~s=~s+1 if crossing page boundary  |
+|--------------------------+-----------------------------------|
+|0000H to 00FFH            |Page 0 (see zero page addressing)  |
+|0100H to 01FFH            |Page 1 (stack area, 01FFH = start) |
+|XX00H to XXFFH            |Page n (where n=XXH)               |
+|FFFAH to FFFBH            |Non maskable interrupt vector(NMI) |
+|FFFCH to FFFDH            |Reset (RES) vector                 |
+|FFFEH to FFFFH            |Interrupt Request vector (IRQ)     |
+|FFFEH to FFFFH            |Break command vector (see BRK)     |
+----------------------------------------------------------------
