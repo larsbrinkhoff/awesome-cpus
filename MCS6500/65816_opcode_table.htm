@@ -1,0 +1,364 @@
+<html>
+<head>
+<title>65816 Instruction Set</title>
+</head>
+
+<h1><center><b>65816 Instruction Set</b></center></h1>
+
+<hr width="75%">
+
+<h2><b>Op-Code Table</b> (arranged in op-code order):</h2>
+
+<table border cellpadding=5 width="100%">
+<tr align="center">
+<td width="7%">\&nbsp;LSD<br>
+MSD&nbsp;\</td>
+<td width="7%">0</td>
+<td width="7%">1</td>
+<td width="7%">2</td>
+<td width="7%">3</td>
+<td width="7%">4</td>
+<td width="7%">5</td>
+<td width="7%">6</td>
+<td width="7%">7</td>
+<td width="7%">8</td>
+<td width="7%">9</td>
+<td width="7%">A</td>
+<td width="7%">B</td>
+<td width="7%">C</td>
+<td width="7%">D</td>
+<td width="7%">E</td>
+<td width="7%">F</td>
+<td width="7%">LSD&nbsp;/<br>
+/&nbsp;MSD</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td>BRK s</td>
+<td>ORA (d,x)</td>
+<td>COP s</td>
+<td>ORA d,s</td>
+<td>TSB d</td>
+<td>ORA d</td>
+<td>ASL d</td>
+<td>ORA [d]</td>
+<td>PHP s</td>
+<td>ORA #</td>
+<td>ASL A</td>
+<td>PHD s</td>
+<td>TSB a</td>
+<td>ORA a</td>
+<td>ASL a</td>
+<td>ORA al</td>
+<td align="center">0</td></tr>
+<tr>
+<td align="center">1</td>
+<td>BPL r</td>
+<td>ORA (d),y</td>
+<td>ORA (d)</td>
+<td>ORA (d,s),y</td>
+<td>TRB d</td>
+<td>ORA d,x</td>
+<td>ASL d,x</td>
+<td>ORA [d],y</td>
+<td>CLI i</td>
+<td>ORA a,y</td>
+<td>INC A</td>
+<td>TCS i</td>
+<td>TRB a</td>
+<td>ORA a,x</td>
+<td>ASL a,x</td>
+<td>ORA al,x</td>
+<td align="center">1</td></tr>
+<tr>
+<td align="center">2</td>
+<td>JSR a</td>
+<td>AND (d,x)</td>
+<td>JSL al</td>
+<td>AND d,s</td>
+<td>BIT d</td>
+<td>AND d</td>
+<td>ROL d</td>
+<td>AND [d]</td>
+<td>PLP s</td>
+<td>AND #</td>
+<td>ROL A</td>
+<td>PLD s</td>
+<td>BIT a</td>
+<td>AND a</td>
+<td>ROL a</td>
+<td>AND al</td>
+<td align="center">2</td></tr>
+<tr>
+<td align="center">3</td>
+<td>BMI r</td>
+<td>AND (d),y</td>
+<td>AND (d)</td>
+<td>AND (d,s),y</td>
+<td>BIT d,x</td>
+<td>AND d,x</td>
+<td>ROL d,x</td>
+<td>AND [d],y</td>
+<td>SEC i</td>
+<td>AND a,y</td>
+<td>DEC A</td>
+<td>TSC i</td>
+<td>BIT a,x</td>
+<td>AND a,x</td>
+<td>ROL a,x</td>
+<td>AND al,x</td>
+<td align="center">3</td></tr>
+<tr>
+<td align="center">4</td>
+<td>RTI</td>
+<td>EOR (d,x)</td>
+<td>WDM ???</td>
+<td>EOR d,s</td>
+<td>MVP xyc</td>
+<td>EOR d</td>
+<td>LSR d</td>
+<td>EOR [d]</td>
+<td>PHA</td>
+<td>EOR #</td>
+<td>LSR A</td>
+<td>PHK</td>
+<td>JMP a</td>
+<td>EOR a</td>
+<td>LSR a</td>
+<td>EOR al</td>
+<td align="center">4</td></tr>
+<tr>
+<td align="center">5</td>
+<td>BVC r</td>
+<td>EOR (d),y</td>
+<td>EOR (d)</td>
+<td>EOR (d,s),y</td>
+<td>MVN xyc</td>
+<td>EOR d,x</td>
+<td>LSR d,x</td>
+<td>EOR [d],y</td>
+<td>CLI i</td>
+<td>EOR a,y</td>
+<td>PHY s</td>
+<td>TCD i</td>
+<td>JMP al</td>
+<td>EOR a,x</td>
+<td>LSR a,x</td>
+<td>EOR al,x</td>
+<td align="center">5</td></tr>
+<tr>
+<td align="center">6</td>
+<td>RTS s</td>
+<td>ADC (d,x)</td>
+<td>PER s</td>
+<td>ADC d,s</td>
+<td>STZ d</td>
+<td>ADC d</td>
+<td>ROR d</td>
+<td>ADC [d]</td>
+<td>PLA s</td>
+<td>ADC #</td>
+<td>ROR A</td>
+<td>RTL s</td>
+<td>JMP (a)</td>
+<td>ADC a</td>
+<td>ROR a</td>
+<td>ADC al</td>
+<td align="center">6</td></tr>
+<tr>
+<td align="center">7</td>
+<td>BVS r</td>
+<td>ADC (d),y</td>
+<td>ADC (d)</td>
+<td>ADC (d,s),y</td>
+<td>STZ d,x</td>
+<td>ADC d,x</td>
+<td>ROR d,x</td>
+<td>ADC [d],y</td>
+<td>SEI i</td>
+<td>ADC a,y</td>
+<td>PLY</td>
+<td>TDC i</td>
+<td>JMP (a,x)</td>
+<td>ADC a,x</td>
+<td>ROR a,x</td>
+<td>ADC al,x</td>
+<td align="center">7</td></tr>
+<tr>
+<td align="center">8</td>
+<td>BRA r</td>
+<td>STA (d,x)</td>
+<td>BRL rl</td>
+<td>STA d,s</td>
+<td>STY d</td>
+<td>STA d</td>
+<td>STX d</td>
+<td>STA [d]</td>
+<td>DEY i</td>
+<td>BIT #</td>
+<td>TXA i</td>
+<td>PHB</td>
+<td>STY a</td>
+<td>STA a</td>
+<td>STX a</td>
+<td>STA al</td>
+<td align="center">8</td></tr>
+<tr>
+<td align="center">9</td>
+<td>BCC r</td>
+<td>STA (d),y</td>
+<td>STA (d)</td>
+<td>STA (d,s),y</td>
+<td>STY d,x</td>
+<td>STA d,x</td>
+<td>STX d,y</td>
+<td>STA [d],y</td>
+<td>TYA i</td>
+<td>STA a,y</td>
+<td>TXS i</td>
+<td>TXY i</td>
+<td>STZ a</td>
+<td>STA a,x</td>
+<td>STZ a,x</td>
+<td>STA al,x</td>
+<td align="center">9</td></tr>
+<tr>
+<td align="center">A</td>
+<td>LDY #</td>
+<td>LDA (d,x)</td>
+<td>LDX #</td>
+<td>LDA d,s</td>
+<td>LDY d</td>
+<td>LDA d</td>
+<td>LDX d</td>
+<td>LDA [d]</td>
+<td>TAY i</td>
+<td>LDA #</td>
+<td>TAX i</td>
+<td>PLB s</td>
+<td>LDY a</td>
+<td>LDA a</td>
+<td>LDX a</td>
+<td>LDA al</td>
+<td align="center">A</td></tr>
+<tr>
+<td align="center">B</td>
+<td>BCS r</td>
+<td>LDA (d),y</td>
+<td>LDA (d)</td>
+<td>LDA (d,s),y</td>
+<td>LDY d,x</td>
+<td>LDA d,x</td>
+<td>LDX d,y</td>
+<td>LDA [d],y</td>
+<td>CLV i</td>
+<td>LDA a,y</td>
+<td>TSX i</td>
+<td>TYX i</td>
+<td>LDY a,x</td>
+<td>LDA a,x</td>
+<td>LDX a,y</td>
+<td>LDA al,x</td>
+<td align="center">B</td></tr>
+<tr>
+<td align="center">C</td>
+<td>CPY #</td>
+<td>CMP (d,x)</td>
+<td>REP #</td>
+<td>CMP d,s</td>
+<td>CPY d</td>
+<td>CMP d</td>
+<td>DEC d</td>
+<td>CMP [d]</td>
+<td>INY</td>
+<td>CMP #</td>
+<td>DEX i</td>
+<td>WAI</td>
+<td>CPY a</td>
+<td>CMP a</td>
+<td>DEC a</td>
+<td>CMP al</td>
+<td align="center">C</td></tr>
+<tr>
+<td align="center">D</td>
+<td>BNE r</td>
+<td>CMP (d),y</td>
+<td>CMP (d)</td>
+<td>CMP (d,s),y</td>
+<td>PEI d</td>
+<td>CMP d,x</td>
+<td>DEC d,x</td>
+<td>CMP [d],y</td>
+<td>CLD i</td>
+<td>CMP a,y</td>
+<td>PHX</td>
+<td>STP</td>
+<td>JML (a)</td>
+<td>CMP a,x</td>
+<td>DEC a,x</td>
+<td>CMP al,x</td>
+<td align="center">D</td></tr>
+<tr>
+<td align="center">E</td>
+<td>CPX #</td>
+<td>SBC (d,x)</td>
+<td>SEP #</td>
+<td>SBC d,s</td>
+<td>CPX d</td>
+<td>SBC d</td>
+<td>INC d</td>
+<td>SBC [d]</td>
+<td>INX</td>
+<td>SBC #</td>
+<td>NOP</td>
+<td>XBA i</td>
+<td>CPX a</td>
+<td>SBC a</td>
+<td>INC a</td>
+<td>SBC al</td>
+<td align="center">E</td></tr>
+<tr>
+<td align="center">F</td>
+<td>BEQ r</td>
+<td>SBC (d),y</td>
+<td>SBC (d)</td>
+<td>SBC (d,s),y</td>
+<td>PEA s</td>
+<td>SBC d,x</td>
+<td>INC d,x</td>
+<td>SBC [d],y</td>
+<td>SED i</td>
+<td>SBC a,y</td>
+<td>PLX s</td>
+<td>XCE i</td>
+<td>JSR (a,x)</td>
+<td>SBC a,x</td>
+<td>INC a,x</td>
+<td>SBC al,x</td>
+<td align="center">F</td></tr>
+<tr align="center">
+<td>MSD&nbsp;/<br>
+/&nbsp;LSD</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>\&nbsp;MSD<br>
+LSD&nbsp;\</td>
+</tr>
+</table>
+
+</body>
+</html>
