@@ -1,8 +1,9 @@
-This repository contains the documentations for various CPUs. It may contain data sheets, programmer's manuals, quick reference cards, and the like.
+This repository contains the documentations for various CPUs. It contain data sheets, programmer's manuals, quick reference cards, and the like.
 
 | Subfolders | Description |
 | ---------- | ----------- |
 | 8085 | Intel 8085 |
+| 88000 | Motorola 88000 family |
 | Alpha | Compaq Alpha family |
 | ARCompact | |
 | ARM | ARM CPU family |
@@ -20,7 +21,7 @@ This repository contains the documentations for various CPUs. It may contain dat
 | MARC4 | |
 | MC6809 | Motorola 6809 and Hitachi 6309 |
 | MCS-51 | |
-| MCS6500 | 6502 and 65816 CPU family |
+| MCS6500 | 6502, 65C02 and 65816 CPU family |
 | MIPS | |
 | MN103 | |
 | MSP430 | |
