@@ -1,0 +1,579 @@
+<html>
+<head>
+<title>Atari "Sally" (6502) Instruction Set</title>
+</head>
+
+<h1><center><b>Atari "Sally" (6502) Instruction Set</b></center></h1>
+
+<hr width="75%">
+
+<h2><b>Op-Code Table</b> (arranged in op-code order):</h2>
+
+<table border cellpadding=5 width="100%">
+<tr align="center">
+<td width="7%">\&nbsp;LSD<br>
+MSD&nbsp;\</td>
+<td width="7%">0</td>
+<td width="7%">1</td>
+<td width="7%">2</td>
+<td width="7%">3</td>
+<td width="7%">4</td>
+<td width="7%">5</td>
+<td width="7%">6</td>
+<td width="7%">7</td>
+<td width="7%">8</td>
+<td width="7%">9</td>
+<td width="7%">A</td>
+<td width="7%">B</td>
+<td width="7%">C</td>
+<td width="7%">D</td>
+<td width="7%">E</td>
+<td width="7%">F</td>
+<td width="7%">LSD&nbsp;/<br>
+/&nbsp;MSD</td></tr>
+<tr>
+<td align="center">0</td>
+<td>BRK</td>
+<td>ORA<br>
+(IND,X)</td>
+<td>JAM *</td>
+<td>SRA *<br>
+(IND,X)</td>
+<td>NOP *<br>
+Z-Page</td>
+<td>ORA<br>
+Z-Page</td>
+<td>ASL<br>
+Z-Page</td>
+<td>SRA *<br>
+Z-Page</td>
+<td>PHP</td>
+<td>ORA<br>
+IMM</td>
+<td>ASL<br>
+A</td>
+<td>ANC *<br>
+IMM</td>
+<td>NOP *<br>
+ABS</td>
+<td>ORA<br>
+ABS</td>
+<td>ASL<br>
+ABS</td>
+<td>SRA *<br>
+ABS</td>
+<td align="center">0</td></tr>
+<tr>
+<td align="center">1</td>
+<td>BPL</td>
+<td>ORA<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>SRA *<br>
+(IND),Y</td>
+<td>NOP *<br>
+Z-Page,X</td>
+<td>ORA<br>
+Z-Page,X</td>
+<td>ASL<br>
+Z-Page,X</td>
+<td>SRA *<br>
+Z-Page,X</td>
+<td>CLC</td>
+<td>ORA<br>
+ABS,Y</td>
+<td>NOP *</td>
+<td>SRA *<br>
+ABS,Y</td>
+<td>NOP *<br>
+ABS,X</td>
+<td>ORA<br>
+ABS,X</td>
+<td>ASL<br>
+ABS,X</td>
+<td>SRA *<br>
+ABS,X</td>
+<td align="center">1</td></tr>
+<tr>
+<td align="center">2</td>
+<td>JSR<br>
+ABS</td>
+<td>AND<br>
+(IND,X)</td>
+<td>JAM *</td>
+<td>RLA *<br>
+(IND,X)</td>
+<td>BIT<br>
+Z-Page</td>
+<td>AND<br>
+Z-Page</td>
+<td>ROL<br>
+Z-Page</td>
+<td>RLA *<br>
+Z-Page</td>
+<td>PLP</td>
+<td>AND<br>
+IMM</td>
+<td>ROL<br>
+A</td>
+<td>ANC *<br>
+IMM</td>
+<td>BIT<br>
+ABS</td>
+<td>AND<br>
+ABS</td>
+<td>ROL<br>
+ABS</td>
+<td>RLA *<br>
+ABS</td>
+<td align="center">2</td></tr>
+<tr>
+<td align="center">3</td>
+<td>BMI</td>
+<td>AND<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>RLA *<br>
+(IND),Y</td>
+<td>NOP *<br>
+Z-Page,X</td>
+<td>AND<br>
+Z-Page,X</td>
+<td>ROL<br>
+Z-Page,X</td>
+<td>RLA *<br>
+Z-Page,X</td>
+<td>SEC</td>
+<td>AND<br>
+ABS,Y</td>
+<td>NOP *</td>
+<td>RLA *<br>
+ABS,Y</td>
+<td>NOP *<br>
+ABS,X</td>
+<td>AND<br>
+ABS,X</td>
+<td>ROL<br>
+ABS,X</td>
+<td>RLA *<br>
+ABS,X</td>
+<td align="center">3</td></tr>
+<tr>
+<td align="center">4</td>
+<td>RTI</td>
+<td>EOR<br>
+(IND,X)</td>
+<td>JAM *</td>
+<td>SLO *<br>
+(IND,X)</td>
+<td>NOP *<br>
+Z-Page</td>
+<td>EOR<br>
+Z-Page</td>
+<td>LSR<br>
+Z-Page</td>
+<td>SLO *<br>
+Z-Page</td>
+<td>PHA</td>
+<td>EOR<br>
+IMM</td>
+<td>LSR<br>
+A</td>
+<td>ASR *<br>
+IMM</td>
+<td>JMP<br>
+ABS</td>
+<td>EOR<br>
+ABS</td>
+<td>LSR<br>
+ABS</td>
+<td>SLO *<br>
+ABS</td>
+<td align="center">4</td></tr>
+<tr>
+<td align="center">5</td>
+<td>BVC</td>
+<td>EOR<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>SLO *<br>
+(IND),Y</td>
+<td>NOP *<br>
+Z-Page,X</td>
+<td>EOR<br>
+Z-Page,X</td>
+<td>LSR<br>
+Z-Page,X</td>
+<td>SLO *<br>
+Z-Page,X</td>
+<td>CLI</td>
+<td>EOR<br>
+ABS,Y</td>
+<td>NOP *</td>
+<td>SLO *<br>
+ABS,Y</td>
+<td>NOP *<br>
+ABS,X</td>
+<td>EOR<br>
+ABS,X</td>
+<td>LSR<br>
+ABS,X</td>
+<td>SLO *<br>
+ABS,X</td>
+<td align="center">5</td></tr>
+<tr>
+<td align="center">6</td>
+<td>RTS</td>
+<td>ADC<br>
+(IND,X)</td>
+<td>JAM *</td>
+<td>RRA *<br>
+(IND,X)</td>
+<td>NOP *<br>
+Z-Page</td>
+<td>ADC<br>
+Z-Page</td>
+<td>ROR<br>
+Z-Page</td>
+<td>RRA *<br>
+Z-Page</td>
+<td>PLA</td>
+<td>ADC<br>
+IMM</td>
+<td>ROR<br>
+A</td>
+<td>ARR *<br>
+IMM</td>
+<td>JMP<br>
+Indirect</td>
+<td>ADC<br>
+ABS</td>
+<td>ROR<br>
+ABS</td>
+<td>RRA *<br>
+ABS</td>
+<td align="center">6</td></tr>
+<tr>
+<td align="center">7</td>
+<td>BVS</td>
+<td>ADC<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>RRA *<br>
+(IND),Y</td>
+<td>NOP *<br>
+Z-Page,X</td>
+<td>ADC<br>
+Z-Page,X</td>
+<td>ROR<br>
+Z-Page,X</td>
+<td>RRA *<br>
+Z-Page,X</td>
+<td>SEI</td>
+<td>ADC<br>
+ABS,Y</td>
+<td>NOP *</td>
+<td>RRA *<br>
+ABS,Y</td>
+<td>NOP *<br>
+ABS,X</td>
+<td>ADC<br>
+ABS,X</td>
+<td>ROR<br>
+ABS,X</td>
+<td>RRA *<br>
+ABS,X</td>
+<td align="center">7</td></tr>
+<tr>
+<td align="center">8</td>
+<td>NOP *<br>
+IMM</td>
+<td>STA<br>
+(IND,X)</td>
+<td>NOP *<br>
+IMM</td>
+<td>SAX *<br>
+(IND,X)</td>
+<td>STY<br>
+Z-Page</td>
+<td>STA<br>
+Z-Page</td>
+<td>STX<br>
+Z-Page</td>
+<td>SAX *<br>
+Z-Page</td>
+<td>DEY</td>
+<td>NOP *<br>
+IMM</td>
+<td>TXA</td>
+<td>AXE *<br>
+IMM</td>
+<td>STY<br>
+ABS</td>
+<td>STA<br>
+ABS</td>
+<td>STX<br>
+ABS</td>
+<td>SAX *<br>
+ABS</td>
+<td align="center">8</td></tr>
+<tr>
+<td align="center">9</td>
+<td>BCC</td>
+<td>STA<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>AX7 *<br>
+(IND),Y</td>
+<td>STY<br>
+Z-Page,X</td>
+<td>STA<br>
+Z-Page,X</td>
+<td>STX<br>
+Z-Page,Y</td>
+<td>SAX *<br>
+Z-Page,Y</td>
+<td>TYA</td>
+<td>STA<br>
+ABS,Y</td>
+<td>TXS</td>
+<td>XS7 *<br>
+ABS,Y</td>
+<td>SY7 *<br>
+ABS,X</td>
+<td>STA<br>
+ABS,X</td>
+<td>SX7 *<br>
+ABS,Y</td>
+<td>AX7 *<br>
+ABS,Y</td>
+<td align="center">9</td></tr>
+<tr>
+<td align="center">A</td>
+<td>LDY<br>
+IMM</td>
+<td>LDA<br>
+(IND,X)</td>
+<td>LDX<br>
+IMM</td>
+<td>LAX *<br>
+(IND,X)</td>
+<td>LDY<br>
+Z-Page</td>
+<td>LDA<br>
+Z-Page</td>
+<td>LDX<br>
+Z-Page</td>
+<td>LAX *<br>
+Z-Page</td>
+<td>TAY</td>
+<td>LDA<br>
+IMM</td>
+<td>TAX</td>
+<td>XEA *<br>
+IMM</td>
+<td>LDY<br>
+ABS</td>
+<td>LDA<br>
+ABS</td>
+<td>LDX<br>
+ABS</td>
+<td>LAX *<br>
+ABS</td>
+<td align="center">A</td></tr>
+<tr>
+<td align="center">B</td>
+<td>BCS</td>
+<td>LDA<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>LAX *<br>
+(IND),Y</td>
+<td>LDY<br>
+Z-Page,X</td>
+<td>LDA<br>
+Z-Page,X</td>
+<td>LDX<br>
+Z-Page,Y</td>
+<td>LAX *<br>
+Z-Page,Y</td>
+<td>CLV</td>
+<td>LDA<br>
+ABS,Y</td>
+<td>TSX</td>
+<td>LAS *<br>
+ABS,Y</td>
+<td>LDY<br>
+ABS,X</td>
+<td>LDA<br>
+ABS,X</td>
+<td>LDX<br>
+ABS,Y</td>
+<td>LAX *<br>
+ABS,Y</td>
+<td align="center">B</td></tr>
+<tr>
+<td align="center">C</td>
+<td>CPY<br>
+IMM</td>
+<td>CMP<br>
+(IND,X)</td>
+<td>NOP *<br>
+IMM</td>
+<td>DCP *<br>
+(IND,X)</td>
+<td>CPY<br>
+Z-Page</td>
+<td>CMP<br>
+Z-Page</td>
+<td>DEC<br>
+Z-Page</td>
+<td>DCP *<br>
+Z-Page</td>
+<td>INY</td>
+<td>CMP<br>
+IMM</td>
+<td>DEX</td>
+<td>ASX *<br>
+IMM</td>
+<td>CPY<br>
+ABS</td>
+<td>CMP<br>
+ABS</td>
+<td>DEC<br>
+ABS</td>
+<td>DCP *<br>
+ABS</td>
+<td align="center">C</td></tr>
+<tr>
+<td align="center">D</td>
+<td>BNE</td>
+<td>CMP<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>DCP *<br>
+(IND),Y</td>
+<td>NOP *<br>
+Z-Page,X</td>
+<td>CMP<br>
+Z-Page,X</td>
+<td>DEC<br>
+Z-Page,X</td>
+<td>DCP *<br>
+Z-Page,X</td>
+<td>CLD</td>
+<td>CMP<br>
+ABS,Y</td>
+<td>NOP *</td>
+<td>DCP *<br>
+ABS,Y</td>
+<td>NOP *<br>
+ABS,X</td>
+<td>CMP<br>
+ABS,X</td>
+<td>DEC<br>
+ABS,X</td>
+<td>DCP *<br>
+ABS,X</td>
+<td align="center">D</td></tr>
+<tr>
+<td align="center">E</td>
+<td>CPX<br>
+IMM</td>
+<td>SBC<br>
+(IND,X)</td>
+<td>NOP *<br>
+IMM</td>
+<td>ISB *<br>
+(IND,X)</td>
+<td>CPX<br>
+Z-Page</td>
+<td>SBC<br>
+Z-Page</td>
+<td>INC<br>
+Z-Page</td>
+<td>ISB *<br>
+Z-Page</td>
+<td>INX</td>
+<td>SBC<br>
+IMM</td>
+<td>NOP</td>
+<td>SBC *<br>
+IMM</td>
+<td>CPX<br>
+ABS</td>
+<td>SBC<br>
+ABS</td>
+<td>INC<br>
+ABS</td>
+<td>ISB *<br>
+ABS</td>
+<td align="center">E</td></tr>
+<tr>
+<td align="center">F</td>
+<td>BEQ</td>
+<td>SBC<br>
+(IND),Y</td>
+<td>JAM *</td>
+<td>ISB *<br>
+(IND),Y</td>
+<td>NOP *<br>
+Z-Page,X</td>
+<td>SBC<br>
+Z-Page,X</td>
+<td>INC<br>
+Z-Page,X</td>
+<td>ISB *<br>
+Z-Page,X</td>
+<td>SED</td>
+<td>SBC<br>
+ABS,Y</td>
+<td>NOP *</td>
+<td>ISB *<br>
+ABS,Y</td>
+<td>NOP *<br>
+ABS,X</td>
+<td>SBC<br>
+ABS,X</td>
+<td>INC<br>
+ABS,X</td>
+<td>ISB *<br>
+ABS,X</td>
+<td align="center">F</td></tr>
+<tr align="center">
+<td>MSD&nbsp;/<br>
+/&nbsp;LSD</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>\&nbsp;MSD<br>
+LSD&nbsp;\</td></tr></table>
+
+<h3>Notes:</h3>
+
+<p>* Undocumented instruction.  The behavior of these opcodes was observed on
+an Atari 800.  It may vary with other 6502-based CPU's.
+
+<hr width="50%" align=left>
+
+<h2><a href="atari.html"><img src="back-atari.gif" alt="Back to Atari page"
+height=64 width=64 border=0 align=abscenter></a>
+<a href="atari.html">Back to Atari Technical Information page</a></h2>
+
+<hr>
+
+</body>
+</html>
