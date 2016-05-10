@@ -3,7 +3,8 @@
 
 This repository contains the documentations for various CPUs. It contain data sheets, programmer's manuals, quick reference cards, and the like.
 
-Before submitting a pull request, [Contribution Guildelines](contributing.md).
+Before submitting a pull request, please read the [Contribution
+Guildelines](contributing.md).
 
 | Subfolders | Description |
 | ---------- | ----------- |

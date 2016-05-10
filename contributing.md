@@ -8,3 +8,6 @@ subdirectory grows large, please add it as a git submodule.  The
 submodule repository should belong to the
 [awesome-cpus](https://github.com/awesome-cpus) origanization.
 Everyone are welcome to join.
+
+Please limit the scope of each commit to one subdirectory, and make
+the first line of the message describe the CPU family.
