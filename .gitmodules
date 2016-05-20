@@ -4,3 +4,6 @@
 [submodule "88000"]
 	path = 88000
 	url = https://github.com/awesome-cpus/awesome-cpus-m88k
+[submodule "i860"]
+	path = i860
+	url = https://github.com/awesome-cpus/awesome-cpus-i860/
