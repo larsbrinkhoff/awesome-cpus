@@ -1,0 +1,247 @@
+Appendix B  Complete Flag Cross-Reference
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+Key to Codes
+
+T     = instruction tests flag
+
+M     = instruction modifies flag
+        (either sets or resets depending on operands)
+
+0     = instruction resets flag
+
+1     = instruction sets flag
+
+컴    = instruction's effect on flag is undefined
+
+R     = instruction restores prior value of flag
+
+blank = instruction does not affect flag
+
+
+Instruction            OF   SF   ZF   AF   PF   CF   TF   IF   DF   NT   RF
+
+AAA                    컴   컴   컴   TM   컴   M
+AAD                    컴   M    M    컴   M    컴
+AAM                    컴   M    M    컴   M    컴
+AAS                    컴   컴   컴   TM   컴   M
+ADC                    M    M    M    M    M    TM
+ADD                    M    M    M    M    M    M
+AND                    0    M    M    컴   M    0
+ARPL                             M
+BOUND
+BSF/BSR                컴   컴   M    컴   컴   컴
+BT/BTS/BTR/BTC         컴   컴   컴   컴   컴   M
+CALL
+CBW
+CLC                                             0
+CLD                                                            0
+CLI                                                       0
+CLTS
+CMC                                             M
+CMP                    M    M    M    M    M    M
+CMPS                   M    M    M    M    M    M              T
+CWD
+DAA                    컴   M    M    TM   M    TM
+DAS                    컴   M    M    TM   M    TM
+DEC                    M    M    M    M    M
+DIV                    컴   컴   컴   컴   컴   컴
+ENTER
+ESC
+HLT
+IDIV                   컴   컴   컴   컴   컴   컴
+IMUL                   M    컴   컴   컴   컴   M
+IN
+INC                    M    M    M    M    M
+INS                                                            T
+INT                                                  0              0
+INTO                   T                             0              0
+IRET                   R    R    R    R    R    R    R    R    R    T
+Jcond                  T    T    T    T    T
+JCXZ
+JMP
+LAHF
+LAR                              M
+LDS/LES/LSS/LFS/LGS
+LEA
+LEAVE
+LGDT/LIDT/LLDT/LMSW
+LOCK
+LODS                                                           T
+LOOP
+LOOPE/LOOPNE                     T
+LSL                              M
+LTR
+MOV
+MOV control, debug     컴   컴   컴   컴   컴   컴
+MOVS                                                           T
+MOVSX/MOVZX
+MUL                    M    컴   컴   컴   컴   M
+NEG                    M    M    M    M    M    M
+NOP
+NOT
+OR                     0    M    M    컴   M    0
+OUT
+OUTS                                                           T
+POP/POPA
+POPF                   R    R    R    R    R    R    R    R    R    R
+PUSH/PUSHA/PUSHF
+RCL/RCR 1              M                        TM
+RCL/RCR count          컴                       TM
+REP/REPE/REPNE
+RET
+ROL/ROR 1              M                        M
+ROL/ROR count          컴                       M
+SAHF                        R    R    R    R    R
+SAL/SAR/SHL/SHR 1      M    M    M    컴   M    M
+SAL/SAR/SHL/SHR count  컴   M    M    컴   M    M
+SBB                    M    M    M    M    M    TM
+SCAS                   M    M    M    M    M    M              T
+SET cond               T    T    T         T    T
+SGDT/SIDT/SLDT/SMSW
+SHLD/SHRD              컴   M    M    컴   M    M
+STC                                             1
+STD                                                            1
+STI                                                       1
+STOS                                                           T
+STR
+SUB                    M    M    M    M    M    M
+TEST                   0    M    M    컴   M    0
+VERR/VERRW                       M
+WAIT
+XCHG
+XLAT
+XOR                    0    M    M    컴   M    0
+
+
+Appendix C  Status Flag Summary
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+Status Flags' Functions
+
+Bit  Name   Function
+
+ 0   CF     Carry Flag 컴 Set on high-order bit carry or borrow; cleared
+            otherwise.
+ 2   PF     Parity Flag 컴 Set if low-order eight bits of result contain
+            an even number of 1 bits; cleared otherwise.
+ 4   AF     Adjust flag 컴 Set on carry from or borrow to the low order
+            four bits of   AL; cleared otherwise. Used for decimal
+            arithmetic.
+ 6   ZF     Zero Flag 컴 Set if result is zero; cleared otherwise.
+ 7   SF     Sign Flag 컴 Set equal to high-order bit of result (0 is
+            positive, 1 if negative).
+11   OF     Overflow Flag 컴 Set if result is too large a positive number
+            or too small a negative number (excluding sign-bit) to fit in
+            destination operand; cleared otherwise.
+
+Key to Codes
+
+T     = instruction tests flag
+M     = instruction modifies flag
+        (either sets or resets depending on operands)
+0     = instruction resets flag
+컴    = instruction's effect on flag is undefined
+blank = instruction does not affect flag
+
+
+
+Instruction            OF   SF   ZF   AF   PF   CF
+AAA                    컴   컴   컴   TM   컴   M
+AAS                    컴   컴   컴   TM   컴   M
+AAD                    컴   M    M    컴   M    컴
+AAM                    컴   M    M    컴   M    컴
+DAA                    컴   M    M    TM   M    TM
+DAS                    컴   M    M    TM   M    TM
+ADC                    M    M    M    M    M    TM
+ADD                    M    M    M    M    M    M
+SBB                    M    M    M    M    M    TM
+SUB                    M    M    M    M    M    M
+CMP                    M    M    M    M    M    M
+CMPS                   M    M    M    M    M    M
+SCAS                   M    M    M    M    M    M
+NEG                    M    M    M    M    M    M
+DEC                    M    M    M    M    M
+INC                    M    M    M    M    M
+IMUL                   M    컴   컴   컴   컴   M
+MUL                    M    컴   컴   컴   컴   M
+RCL/RCR 1              M                        TM
+RCL/RCR count          컴                       TM
+ROL/ROR 1              M                        M
+ROL/ROR count          컴                       M
+SAL/SAR/SHL/SHR 1      M    M    M    컴   M    M
+SAL/SAR/SHL/SHR count  컴   M    M    컴   M    M
+SHLD/SHRD              컴   M    M    컴   M    M
+BSF/BSR                컴   컴   M    컴   컴   컴
+BT/BTS/BTR/BTC         컴   컴   컴   컴   컴   M
+AND                    0    M    M    컴   M    0
+OR                     0    M    M    컴   M    0
+TEST                   0    M    M    컴   M    0
+XOR                    0    M    M    컴   M    0
+
+
+Appendix D  Condition Codes
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
+Note:
+  The terms "above" and "below" refer to the relation between two
+  unsigned values (neither SF nor OF is tested). The terms "greater" and
+  "less" refer to the relation between two signed values (SF and OF are
+  tested).
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
+
+Definition of Conditions
+
+(For conditional instructions Jcond, and SETcond)
+
+
+                                       Instruction  Condition
+Mnemonic  Meaning                      Subcode      Tested
+
+O         Overflow                     0000         OF = 1
+
+NO        No overflow                  0001         OF = 0
+
+B         Below
+NAE       Neither above nor equal      0010         CF = 1
+
+NB        Not below
+AE       Above or equal                0011         CF = 0
+
+E         Equal
+Z         Zero                         0100         ZF = 1
+
+NE        Not equal
+NZ        Not zero                     0101         ZF = 0
+
+BE        Below or equal
+NA        Not above                    0110         (CF or ZF) = 1
+
+NBE       Neither below nor equal
+NA        Above                        0111         (CF or ZF) = 0
+
+S         Sign                         1000         SF = 1
+
+NS        No sign                      1001         SF = 0
+
+P         Parity
+PE        Parity even                  1010         PF = 1
+
+NP        No parity
+PO        Parity odd                   1011         PF = 0
+
+L         Less
+NGE       Neither greater nor equal    1100         (SF xor OF) = 1
+
+NL        Not less
+GE        Greater or equal             1101         (SF xor OF) = 0
+
+LE        Less or equal
+NG        Not greater                  1110         ((SF xor OF) or ZF) = 1
+
+NLE       Neither less nor equal
+G         Greater                      1111         ((SF xor OF) or ZF) = 0
