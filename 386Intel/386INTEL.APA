@@ -1,0 +1,283 @@
+Appendix A  Opcode Map
+
+ฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤ
+
+The opcode tables that follow aid in interpreting 80386 object code. Use
+the high-order four bits of the opcode as an index to a row of the opcode
+table; use the low-order four bits as an index to a column of the table. If
+the opcode is 0FH, refer to the two-byte opcode table and use the second
+byte of the opcode to index the rows and columns of that table.
+
+
+Key to Abbreviations
+
+Operands are identified by a two-character code of the form Zz. The first
+character, an uppercase letter, specifies the addressing method; the second
+character, a lowercase letter, specifies the type of operand.
+
+
+Codes for Addressing Method
+
+A  Direct address; the instruction has no modR/M byte; the address of the
+   operand is encoded in the instruction; no base register, index register,
+   or scaling factor can be applied; e.g., far JMP (EA).
+
+C  The reg field of the modR/M byte selects a control register; e.g., MOV
+   (0F20, 0F22).
+
+D  The reg field of the modR/M byte selects a debug register; e.g., MOV
+   (0F21,0F23).
+
+E  A modR/M byte follows the opcode and specifies the operand. The operand
+   is either a general register or a memory address. If it is a memory
+   address, the address is computed from a segment register and any of the
+   following values: a base register, an index register, a scaling factor,
+   a displacement.
+
+F  Flags Register.
+
+G  The reg field of the modR/M byte selects a general register; e.g., ADD
+   (00).
+
+I  Immediate data. The value of the operand is encoded in subsequent bytes
+   of the instruction.
+
+J  The instruction contains a relative offset to be added to the
+   instruction pointer register; e.g., JMP short, LOOP.
+
+M  The modR/M byte may refer only to memory; e.g., BOUND, LES, LDS, LSS,
+   LFS, LGS.
+
+O  The instruction has no modR/M byte; the offset of the operand is coded as
+   a word or double word (depending on address size attribute) in the
+   instruction. No base register, index register, or scaling factor can be
+   applied; e.g., MOV (A0-A3).
+
+R  The mod field of the modR/M byte may refer only to a general register;
+   e.g., MOV (0F20-0F24, 0F26).
+
+S  The reg field of the modR/M byte selects a segment register; e.g., MOV
+   (8C,8E).
+
+T  The reg field of the modR/M byte selects a test register; e.g., MOV
+   (0F24,0F26).
+
+X  Memory addressed by DS:SI; e.g., MOVS, COMPS, OUTS, LODS, SCAS.
+
+Y  Memory addressed by ES:DI; e.g., MOVS, CMPS, INS, STOS.
+
+
+Codes for Operant Type
+
+a  Two one-word operands in memory or two double-word operands in memory,
+   depending on operand size attribute (used only by BOUND).
+
+b  Byte (regardless of operand size attribute)
+
+c  Byte or word, depending on operand size attribute.
+
+d  Double word (regardless of operand size attribute)
+
+p  32-bit or 48-bit pointer, depending on operand size attribute.
+
+s  Six-byte pseudo-descriptor
+
+v  Word or double word, depending on operand size attribute.
+
+w  Word (regardless of operand size attribute)
+
+
+Register Codes
+
+When an operand is a specific register encoded in the opcode, the register
+is identified by its name; e.g., AX, CL, or ESI. The name of the register
+indicates whether the register is 32-, 16-, or 8-bits wide. A register
+identifier of the form eXX is used when the width of the register depends on
+the operand size attribute; for example, eAX indicates that the AX register
+is used when the operand size attribute is 16 and the EAX register is used
+when the operand size attribute is 32.
+
+
+One-Byte Opcode Map
+    0       1      2      3      4      5      6      7       8      9     A       B      C      D         E        F
+ ษอออออออออออออออออออออออออออออออออออออออออัอออออัอออออออัอออออออออออออออออออออออออออออออออออออออออัออออออัอออออออป
+ บ                     ADD                 ณPUSH ณ   POP ณ                   OR                    ณ PUSH ณ2-byte บ
+ วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤด     ณ       รฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤด      ณ       บ
+0บEb,Gb ณEv,Gv  ณGb,EbณGv,Ev ณAL,Ibณ eAX,Ivณ ES  ณ   ES  ณ Eb,GbณEv,Gv ณGb,Ebณ Gv,Ev ณAL,Ib ณeAX,Ivณ   CS ณescape บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออออุอออออุอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯออออออุออออออุอออออออน
+ บ                     ADC                 ณPUSH ณ   POP ณ                  SBB                    ณ PUSH ณ POP   บ
+1วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤด     ณ       รฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤด      ณ       บ
+ บEb,Gb ณEv,Gv  ณGb,EbณGv,Ev ณAL,Ibณ eAX,Ivณ SS  ณ   SS  ณEb,Gb ณEv,Gv ณGb,Ebณ Gv,Ev ณAL,Ib ณeAX,Ivณ   DS ณ  DS   บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออออุอออออุอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯออออออุออออออุอออออออน
+ บ                     AND                 ณ SEG ณ       ณ                  SUB                    ณ  SEG ณ       บ
+2วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤด     ณ   DAA รฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤด      ณ DAS   บ
+ บEb,Gb ณEv,Gv  ณGb,EbณGv,Ev ณAL,Ibณ eAX,Ivณ =ES ณ       ณ Eb,GbณEv,Gv ณGb,Ebณ Gv,Ev ณAL,Ib ณeAX,Ivณ  =CS ณ       บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออออุอออออุอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯออออออุออออออุอออออออน
+ บ                     XOR                 ณ SEG ณ       ณ                  CMP                    ณ  SEG ณ       บ
+3วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤด     ณ   AAA รฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤด      ณ AAS   บ
+ บEb,Gb ณEv,Gv  ณGb,EbณGv,Ev ณAL,Ibณ eAX,Ivณ =SS ณ       ณ Eb,GbณEv,Gv ณGb,Ebณ Gv,Ev ณAL,Ib ณeAX,Ivณ  =CS ณ       บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออออฯอออออฯอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯออออออฯออออออฯอออออออน
+ บ                  INC general register                 ณ                  DEC general register                  บ
+4วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤฤถ
+ บ eAX  ณ eCX   ณ eDX ณ eBX  ณ eSP ณ   eBP ณ eSI ณ  eDI  ณeAX   ณ eCX  ณ eDX ณ eBX   ณ eSP  ณ  eBP ณ   eSIณ eDI   บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออออฯอออออฯอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯออออออฯออออออฯอออออออน
+ บ                   PUSH general register               ณ              POP into general register                 บ
+5วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤฤถ
+ บ eAX  ณ eCX   ณ eDX ณeBX   ณ  eSPณ  eBPณ  eSI  ณ  eDI  ณeAX   ณ eCX  ณ eDX ณ eBX   ณ  eSP ณ  eBP ณ  eSI ณ  eDI  บ
+ ฬออออออุอออออออุอออออุออออออุอออออุอออออุอออออออุอออออออุออออออุออออออุอออออุอออออออุออออออุออออออุออออออุอออออออน
+ บ      ณ       ณBOUNDณARPL  ณ SEG ณ SEG ณOperandณAddressณ PUSH ณIMUL  ณPUSH ณIMUL   ณ INSB ณINSW/Dณ OUTSBณOUTSW/Dบ
+6บPUSHA ณ POPA  ณ     ณ      ณ     ณ     ณ       ณ       ณ      ณ      ณ     ณ       ณ      ณ      ณ      ณ       บ
+ บ      ณ       ณGv,Maณ Ew,Rwณ =FS ณ =GS ณ Size  ณ  Size ณ  Ib  ณGvEvIvณ Ib  ณGvEvIv ณYb,DX ณ Yb,DXณ Dx,Xbณ DX,Xv บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออฯอออออออฯอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯออออออฯออออออฯอออออออน
+ บ        Short displacement jump of condition (Jb)      ณ       Short-displacement jump on condition(Jb)         บ
+7วฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤถ
+ บ  JO  ณ  JNO  ณ  JB ณJNB   ณ JZ  ณ  JNZ  ณ JBE ณ  JNBE ณ JS   ณ  JNS ณ  JP ณ  JNP  ณ  JL  ณ  JNL  ณ JLE ณ  JNLE บ
+ ฬออออออฯอออออออุอออออุออออออุอออออฯอออออออุอออออฯอออออออุออออออฯออออออฯอออออฯอออออออุออออออุอออออออุอออออุอออออออน
+ บImmediate Grplณ     ณGrpl  ณ    TEST     ณ   XCNG      ณ           MOV             ณ MOV  ณ  LEA  ณMOV  ณ  POP  บ
+8วฤฤฤฤฤฤยฤฤฤฤฤฤฤด     ณ      รฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤด      ณ       ณ     ณ       บ
+ บEb,Ib ณ Ev,Iv ณ     ณEv,Iv ณEb,Gbณ Ev,Gv ณEb,Gbณ  Ev,GvณEb,Gb ณEv,Gv ณGb,Ebณ Gv,Ev ณEw,Sw ณ Gv,M  ณSw,Ewณ   Ev  บ
+ ฬออออออุอออออออฯอออออฯออออออฯอออออฯอออออออฯอออออฯอออออออุออออออุออออออุอออออุอออออออุออออออุอออออออุอออออุอออออออน
+ บ      ณ  XCHG word or double-word register with eAX    ณ      ณ      ณ CALLณ       ณPUSHF ณ POPF  ณ     ณ       บ
+9บ  NOP รฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤด CBW  ณ  CWD ณ     ณ  WAIT ณ      ณ       ณ SAHFณ  LAHF บ
+ บ      ณ  eCX  ณ eDX ณ eBX  ณ eSP ณ  eBP  ณ eSI ณ  eDI  ณ      ณ      ณ  Ap ณ       ณ Fv   ณ  Fv   ณ     ณ       บ
+ ฬออออออฯอออออออฯอออออฯออออออุอออออุอออออออุอออออุอออออออุออออออฯออออออุอออออุอออออออุออออออุอออออออุอออออุอออออออน
+ บ             MOV           ณMOVSBณMOVSW/DณCMPSBณCMPSW/Dณ    TEST     ณSTOSBณSTOSW/Dณ LODSBณLODSW/DณSCASBณSCASW/Dบ
+Aวฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤด     ณ       ณ     ณ       รฤฤฤฤฤฤยฤฤฤฤฤฤด     ณ       ณ      ณ       ณ     ณ       บ
+ บAL,Ob ณeAX,Ov ณOb,ALณOv,eAXณXb,YbณXv,Yv  ณXb,Ybณ Xv,Yv ณAL,Ib ณeAX,IvณYb,ALณ Yv,eAXณ AL,Xbณ eAX,XvณAL,XbณeAX,Xv บ
+ ฬออออออฯอออออออฯอออออฯออออออฯอออออฯอออออออฯอออออฯอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯอออออออฯอออออฯอออออออน
+ บ          MOV immediate byte into byte register        ณMOV immediate word or duble into word or double registerบ
+Bวฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤถ
+ บ AL   ณ  CL   ณ DL  ณ BL   ณ  AH ณ CH   ณ   DH ณ  BH   ณ eAX  ณ eCX  ณ eDX ณ eBX   ณ  eSP ณ  eBP  ณ eSI ณ eDI   บ
+ ฬออออออฯอออออออุอออออฯออออออุอออออุออออออุออออออฯอออออออุออออออุออออออุอออออฯอออออออุออออออุอออออออุอออออุอออออออน
+ บ Shift Grp2   ณ  RET near  ณ LES ณ  LDS ณ     MOV      ณENTER ณ      ณ  RET far    ณ  INT ณ  INT  ณ     ณ       บ
+Cวฤฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤยฤฤฤฤฤฤด     ณ      รฤฤฤฤฤฤยฤฤฤฤฤฤฤด      ณLEAVE รฤฤฤฤฤยฤฤฤฤฤฤฤด      ณ       ณINTO ณ IRET  บ
+ บEb,Ib ณ Ev,Iv ณ  Iw ณ      ณGv,MpณGv,Mp ณ Eb,Ibณ Ev,Iv ณIw,Ib ณ      ณ Iw  ณ       ณ   3  ณ  Ib   ณ     ณ       บ
+ ฬออออออฯอออออออฯอออออฯออออออุอออออุออออออุออออออุอออออออุออออออฯออออออฯอออออฯอออออออฯออออออฯอออออออฯอออออฯอออออออน
+ บ          Shift Grp2       ณ     ณ      ณ      ณ       ณ                                                        บ
+Dวฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤด AAM ณ AAD  ณ      ณ XLAT  ณ        ESC(Escape to coprocessor instruction set)      บ
+ บ Eb,1 ณ Ev,1  ณEb,CLณEv,CL ณ     ณ      ณ      ณ       ณ                                                        บ
+ ฬออออออุอออออออุอออออุออออออุอออออฯออออออุออออออฯอออออออุออออออัออออออออออออออออออออัออออออออออออัอออออออออออออออน
+ บLOOPNEณ LOOPE ณLOOP ณ JCXZ ณ    IN      ณ     OUT      ณ CALL ณ         JNP        ณ     IN     ณ     OUT       บ
+Eบ      ณ       ณ     ณ      รฤฤฤฤฤยฤฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤฤด      รฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤฤลฤฤฤฤฤยฤฤฤฤฤฤลฤฤฤฤฤฤฤยฤฤฤฤฤฤฤถ
+ บ  Jb  ณ   Jb  ณ  Jb ณ Jb   ณAL,IbณeAX,Ibณ Ib,ALณIb,eAX ณ  Av  ณ  Jv  ณ  Ap ณ  Jb   ณAL,DXณeAX,DXณ DX,AL ณDX,eAX บ
+ ฬออออออุอออออออุอออออุออออออุอออออุออออออุออออออฯอออออออุออออออุออออออุอออออุอออออออุอออออุออออออุอออออออุอออออออน
+ บ      ณ       ณ     ณ REP  ณ     ณ      ณ  Unary Grp3  ณ      ณ      ณ     ณ       ณ     ณ      ณINC/DECณIndirctบ
+Fบ LOCK ณ       ณREPNEณ      ณ HLT ณ  CMC รฤฤฤฤฤฤยฤฤฤฤฤฤฤด CLC  ณ  STC ณ CLI ณ  STI  ณ CLD ณ STD  ณ       ณ       บ
+ บ      ณ       ณ     ณ REPE ณ     ณ      ณ  Eb  ณ  Ev   ณ      ณ      ณ     ณ       ณ     ณ      ณ Grp4  ณ Grp5  บ
+ ศออออออฯอออออออฯอออออฯออออออฯอออออฯออออออฯออออออฯอออออออฯออออออฯออออออฯอออออฯอออออออฯอออออฯออออออฯอออออออฯอออออออผ
+
+
+Two-Byte Opcode Map (first byte is 0FH)
+
+
+    0      1      2      3       4     5      6     7     8       9      A      B      C      D     E      F
+
+ ษออออออัออออออัออออออัออออออัออออออัออออออัอออออัอออออัออออออัออออออัออออออัออออออัออออออัออออออัอออออัออออออป
+ บ      ณ      ณ  LAR ณ LSL  ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+0บ Grp6 ณGrp7  ณ      ณ      ณ      ณ      ณ CLTSณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ Gw,Ewณ Gv,Ewณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+1บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ  MOV ณ MOV  ณ  MOV ณ  MOV ณ  MOV ณ      ณ MOV ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+2บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ Cd,Rdณ Dd,Rdณ Rd,Cdณ Rd,Ddณ Td,Rdณ      ณRd,Tdณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+3บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+4บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+5บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+6บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+7บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออฯออออออฯออออออฯออออออฯออออออฯออออออฯอออออฯอออออุออออออฯออออออฯออออออฯออออออฯออออออฯออออออฯอออออฯออออออน
+ บ          Long-displacement jump on condition (Jv)   ณ        Long-displacement jump on condition (Jv)      บ
+8วฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤลฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤถ
+ บ  JO  ณ  JNO ณ  JB  ณ  JNB ณ JZ   ณ  JNZ ณ JBE ณ JNBEณ   JS ณ  JNS ณ   JP ณ JNP  ณ  JL  ณ  JNL ณ JLE ณJNLE  บ
+ ฬออออออฯออออออฯออออออฯออออออฯออออออฯออออออฯอออออฯออออออุอออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ               Byte Set on condition (Eb)             ณ     ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+9วฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤฤยฤฤฤฤฤยฤฤฤฤฤฤด SETSณ SETNSณ SETP ณ SETNPณ SETL ณSETNL ณSETLEณSETNLEบ
+ บ SETO ณ SETNOณ SETB ณSETNB ณ SETZ ณ SETNZณSETBEณSETNBEณ     ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออุอออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ PUSH ณ  POP ณ      ณ  BT  ณ SHLD ณ  SHLDณ     ณ     ณ PUSH ณ  POP ณ      ณ BTS  ณ SHRD ณ SHRD ณ     ณ IMUL บ
+Aบ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ  FS  ณ  FS  ณ      ณ Ev,GvณEvGvIbณEvGvCLณ     ณ     ณ GS   ณ  GS  ณ      ณ Ev,GvณEvGvIbณEvGvCLณ     ณ Gv,Evบ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออฯอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออฯออออออน
+ บ      ณ      ณ LSS  ณ  BTR ณ LFS  ณ  LGS ณ   MOVZX   ณ      ณ      ณ Grp-8ณ  BTC ณ  BSF ณ BSR  ณ    MOVSX   บ
+Bบ      ณ      ณ      ณ      ณ      ณ      รฤฤฤฤฤยฤฤฤฤฤด      ณ      ณ      ณ      ณ      ณ      รฤฤฤฤฤฤฤฤฤฤฤฤถ
+ บ      ณ      ณ Mp   ณ Ev,Gvณ Mp   ณ  Mp  ณGv,EbณGv,Ewณ      ณ      ณ Ev,Ibณ Ev,GvณGv,Ev ณ Gv,EvณGv,Eb  Gv,Ewบ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออัออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+Cบ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+Dบ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+Eบ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ฬออออออุออออออุออออออุออออออุออออออุออออออุอออออุอออออุออออออุออออออุออออออุออออออุออออออุออออออุอออออุออออออน
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+Fบ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ บ      ณ      ณ      ณ      ณ      ณ      ณ     ณ     ณ      ณ      ณ      ณ      ณ      ณ      ณ     ณ      บ
+ ศออออออฯออออออฯออออออฯออออออฯออออออฯออออออฯอออออฯอออออฯออออออฯออออออฯออออออฯออออออฯออออออฯออออออฯอออออฯออออออผ
+
+
+Opcodes determined by bits 5,4,3 of modR/M byte:
+
+     G                       ฺฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤฟ
+     r                       ณ  mod  ณ  nnn  ณ  R/M  ณ
+     o                       ภฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤู
+     u
+     p   000     001     010     011     100     101     110     111
+      ฺฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤฟ
+     1ณ  ADD  ณ  OR   ณ  ADC  ณ  SBB  ณ  AND  ณ  SUB  ณ  XOR  ณ  CMP  ณ
+      ณ       ณ       ณ       ณ       ณ       ณ       ณ       ณ       ณ
+      รฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤด
+     2ณ  ROL  ณ  ROR  ณ  RCL  ณ  RCR  ณ  SHL  ณ  SHR  ณ       ณ  SAR  ณ
+      ณ       ณ       ณ       ณ       ณ       ณ       ณ       ณ       ณ
+      รฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤด
+     3ณ TEST  ณ       ณ  NOT  ณ  NEG  ณ  MUL  ณ IMUL  ณ  DIV  ณ IDIV  ณ
+      ณ Ib/Iv ณ       ณ       ณ       ณAL/eAX ณAL/eAX ณAL/eAX ณAL/eAX ณ
+      รฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤด
+     4ณ  INC  ณ  DEC  ณ       ณ       ณ       ณ       ณ       ณ       ณ
+      ณ  Eb   ณ  Eb   ณ       ณ       ณ       ณ       ณ       ณ       ณ
+      รฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤด
+     5ณ  INC  ณ  DEC  ณ CALL  ณ CALL  ณ  JMP  ณ  JMP  ณ PUSH  ณ       ณ
+      ณ  Ev   ณ  Ev   ณ  Ev   ณ  eP   ณ  Ev   ณ  Ep   ณ  Ev   ณ       ณ
+      ภฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤู
+
+
+Opcodes determined by bits 5,4,3 of modR/M byte:
+
+     G                       ฺฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤฟ
+     r                       ณ  mod  ณ  nnn  ณ  R/M  ณ
+     o                       ภฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤู
+     u
+     p   000     001     010     011     100     101     110     111
+      ฺฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤยฤฤฤฤฤฤฤฟ
+     6ณ SLDT  ณ  STR  ณ LLDT  ณ  LTR  ณ VERR  ณ VERW  ณ       ณ       ณ
+      ณ  Ew   ณ  Ew   ณ  Ew   ณ  Ew   ณ  Ew   ณ  Ew   ณ       ณ       ณ
+      รฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤด
+     7ณ SGDT  ณ SIDT  ณ LGDT  ณ LIDT  ณ SMSW  ณ       ณ LMSW  ณ       ณ
+      ณ  Ms   ณ  Ms   ณ  Ms   ณ   Ms  ณ  Ew   ณ       ณ  Ew   ณ       ณ
+      รฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤลฤฤฤฤฤฤฤด
+     8ณ       ณ       ณ       ณ       ณ  BT   ณ  BTS  ณ  BTR  ณ  BTC  ณ
+      ณ       ณ       ณ       ณ       ณ       ณ       ณ       ณ       ณ
+      ภฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤมฤฤฤฤฤฤฤู
