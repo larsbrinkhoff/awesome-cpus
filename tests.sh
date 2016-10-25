@@ -40,6 +40,16 @@ test_commits() {
     echo OK
 }
 
+test_readme() {
+    echo -n "Checking that every directory has a README.md... "
+
+    for i in *; do
+	if test -d "$i"; then
+	    test -f "$i/README.md" || error "The $i directory has no README.md."
+	fi
+    done
+}
+
 test_directory_size
 test_commits
 
