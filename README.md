@@ -5,7 +5,7 @@
 This repository contains documentation for various CPUs.  There are data sheets, programmer's manuals, quick reference cards, etc.
 
 Before submitting a pull request, please read the [Contribution
-Guildelines](CONTRIBUTING.md).
+Guidelines](CONTRIBUTING.md).
 
 ## Contents
 
