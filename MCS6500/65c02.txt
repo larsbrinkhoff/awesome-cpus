@@ -127,10 +127,10 @@
 |PHP   |08|-------|    X   |3|Push status register |-[S]=P     |
 |PHX   |DA|-------|    X   |2|Push index register  |-[S]=X     |
 |PHY   |5A|-------|    X   |2|Push index register  |-[S]=Y     |
-|PLA   |68|-------|    X   |4|Pull Accumulator     |A=[S]+     |
+|PLA   |68|*----*-|    X   |4|Pull Accumulator     |A=[S]+     |
 |PLP   |28|*******|    X   |4|Pull status register |P=[S]+     |
-|PLX   |FA|-------|    X   |2|Pull index register  |X=[S]+     |
-|PLY   |7A|-------|    X   |2|Pull index register  |Y=[S]+     |
+|PLX   |FA|*----*-|    X   |2|Pull index register  |X=[S]+     |
+|PLY   |7A|*----*-|    X   |2|Pull index register  |Y=[S]+     |
 |RMBb d|07|-------|  *     |5|Reset Memory Bit     |d<b>=0     |
 |ROL  d|2E|*----**|  xx    |6|Rotate Left          |d={C,d}<-  |
 |ROLA  |2A|*----**|X       |2|Rotate Left Acc.     |A={C,A}<-  |
