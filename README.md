@@ -34,6 +34,7 @@ Guidelines](CONTRIBUTING.md).
 - [MC6809](MC6809)
 - [MCS-48](MCS-48)
 - [MCS-51](MCS-51)
+- [MCS-96](MCS-96)
 - [MCS6500](MCS6500)
 - [MicroBlaze](MicroBlaze)
 - [MIPS](MIPS)
