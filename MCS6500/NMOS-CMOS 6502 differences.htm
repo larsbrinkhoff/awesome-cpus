@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+   <title>NMOS-CMOS 6502 differences</title>
+   <meta name="KEYWORDS" content="NMOS CMOS 6502">
+</head>
+<body>
+<small>
+<a href="http://wilsonminesco.com/">home</a> &nbsp; | &nbsp;
+<a href="http://wilsonminesco.com/links.html">the&nbsp;links&nbsp;mine</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/6502primer/">6502&nbsp;primer</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/16bitMathTables/">large&nbsp;math&nbsp;look-up&nbsp;tables</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/StructureMacros/">65c02&nbsp;assembly&nbsp;structure&nbsp;macros</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/multitask/">simple&nbsp;multitask</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/6502interrupts/">6502&nbsp;interrupts</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/0-overhead_Forth_interrupts/">zero-overhead&nbsp;Forth&nbsp;interrupts</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/RS-232/RS-232primer.html">RS-232&nbsp;primer</a>&nbsp; &nbsp;| &nbsp;
+<a href="http://wilsonminesco.com/AssyDefense/">assembly&nbsp;relevant&nbsp;today</a>&nbsp; &nbsp;| &nbsp;
+CMOS-NMOS&nbsp;6502&nbsp;difs &nbsp; | &nbsp;
+<a href="http://wilsonminesco.com/stacks/">6502&nbsp;stacks&nbsp;treatise</a> &nbsp; | &nbsp;
+<a href="http://wilsonminesco.com/BenchCPU/">workbench&nbsp;computers</a> &nbsp; | &nbsp;
+<a href="http://wilsonminesco.com/SelfModCode/">self-modifying&nbsp;code</a> &nbsp; | &nbsp;
+<a href="http://wilsonminesco.com/816myths/">65816&nbsp;misunderstandings</a>
+<br>
+
+</small>
+<br><br><br><center><strong><big><big>Differences between NMOS 6502 and CMOS 65c02</big></big></strong></center>
+<br><br>
+<br><big><strong>On this page:</strong></big>
+<ul><li><strong><a href="#hdwr">hardware differences</a></strong>
+    </li><li><strong><a href="#sw">software differences</a></strong> (and a combination hardware/software difference)
+    <!--<li><strong><a href="#sh">special software/hardware combination differences </a></strong>
+    <li><strong><a href="#var">processor variations</a></strong>-->
+    </li><li><strong><a href="#av">availability</a></strong>
+    </li><li><strong><a href="#fur">for further reading</a></strong>
+</li></ul>
+
+<p><br>On certain forums, and in a recent web search, I have found that 
+some 6502 enthusiasts are apparently still unaware of the CMOS 6502
+(<a href="https://en.wikipedia.org/wiki/WDC_65C02" target="_blank">65c02</a>) which was out in the early 1980's and of the benefits it offers over
+the original NMOS 6502.&nbsp; On one forum, someone said something about the<tt> BRA </tt>(Branch Relative Always) instruction,
+and another said, "The 6502 doesn't have a<tt> BRA </tt>instruction, but
+ I think I know what you mean," thinking the first one
+was confusing it with a different processor.&nbsp; I've seen 
+enthusiasts' web pages saying the 6502 was offered in 1MHz and 2MHz 
+versions, the writers
+being unaware that all the them being made since the mid-1990's are 
+guaranteed to meet the timing specifications at 14MHz or better, and 
+that the
+fastest ones are put at the heart of custom ICs and are running over 
+200MHz.
+<br>
+<br>
+<br>
+</p><h1><a name="hdwr"></a></h1><center><big><big><strong>Hardware differences</strong></big></big></center>
+
+<ul>
+   <li>CMOS allows much higher speeds.&nbsp; All the 65c02's being made 
+today are guaranteed to meet specs at at least 14MHz.&nbsp; All WDC ones
+ are
+       tested at 20MHz.&nbsp; 6502.org forum member "plasmo" got both a 
+W65C02S and a W65C816S to run at 36MHz, 40MHz at 5.3V (see
+       <a href="http://forum.6502.org/viewtopic.php?p=87657#p87657" target="_blank">here</a>).&nbsp; Also, forum member "Windfall" got both
+       running at 24MHz at 3.3V, three times the speed guaranteed for that voltage by the data sheet!&nbsp; (See
+       <a href="http://forum.6502.org/viewtopic.php?p=50721#p50721" target="_blank">here</a>.)<p>
+
+   </p></li><li>CMOS can run at lower voltages.&nbsp; The WDC W65C02S is spec'ed from 1.71V to 5.25V.<p>
+
+   </p></li><li>CMOS requires less power, and if all loads are CMOS 
+also, power is proportional to frequency, dropping to essentially zero 
+when the clock is
+       stopped.<p>
+
+   </p></li><li>CMOS allows the clock to be stretched or stopped 
+indefinitely without losing data.&nbsp; WDC's allows stopping the clock 
+in either
+       phase.&nbsp; Other brands of 65c02 could only stop when &#934;2 was 
+high.&nbsp; NMOS was not guaranteed to run reliably below 50 or 100kHz
+       depending on brand.<p>
+
+   </p></li><li>CMOS allows a crystal to be hung directly on &#934;0 &amp; &#934;1
+ for oscillation, or an RC hung directly on these plus &#934;2, eliminating 
+the
+       need for an external oscillator for some applications.&nbsp; (See
+ the
+       <a href="http://wilsonminesco.com/6502primer/ClkGen.html" target="_blank">clock-generation page</a>
+ of the 6502 primer on this site.)&nbsp; NMOS
+       always needed the external oscillator.&nbsp; (Most recently 
+however, WDC has said they no longer test the timings of these three 
+relative to
+       each other, and they prefer that you use an external oscillator, 
+even though all the circuitry is still there, operational, for using it 
+as an
+       onboard oscillator.&nbsp; In critical cases, a separate 
+oscillator may still be preferable.)<p>
+
+   </p></li><li>CMOS can pull all the way up to V<small>DD</small>.&nbsp; Output high voltage with light load may be only a few mV from V<small>DD</small>.<p>
+
+   </p></li><li>CMOS offers better noise immunity.<p>
+
+   </p></li><li>CMOS:&nbsp; Some manufacturers put weak pull-ups to V<small>DD</small> on <span style="text-decoration: overline;">IRQ</span>,
+       <span style="text-decoration: overline;">NMI</span>, RDY, <span style="text-decoration: overline;">RST</span>,
+       <span style="text-decoration: overline;">SO</span>, and on WDC's, BE (bus enable).&nbsp; (Since not all did, you will need to check the data
+       sheet before leaving them unconnected.)<p>
+
+   </p></li><li>CMOS (WDC W65C02S and others' 65C102 and 65C112) has 
+more signals, for a wider range of hardware applications:&nbsp; bus 
+enable (BE, DIP pin 36,
+       PLCC pin 40, and PQFP pin 34), and memory lock (<span style="text-decoration: overline;">ML</span>, DIP pin 5, PLCC pin 6, and PQFP pin 44), and
+       on the WDC part, vector pull (<span style="text-decoration: overline;">VP</span>,
+ DIP pin 1, PLCC pin 2, and PQFP pin 40).&nbsp; Note that pin 1
+       of NMOS and most non-WDC CMOS µP's in the 40-pin DIP is ground 
+(like pin 21); so if you want to make a board able to take all brands, 
+it
+       would be good to have pin 1's function jumper-selectable.<p>
+
+   </p></li><li>CMOS is available in 44-pin PLCC and PQFP, not just 
+40-pin DIP.&nbsp; At the time of this writing (July 2015), the PQFP is 
+only available from
+       WDC, not their distributors.&nbsp; The PQFP definitely saves a 
+lot of board space.<p>
+
+   </p></li><li>CMOS has stronger bus-drive capability, far stronger 
+than the datasheets let on.&nbsp; I have done some brief tests on WDC's 
+W65C816S's pin
+       drivers which I suspect are the same ones used they used on the 
+W65C02S.&nbsp; Their behavior was pretty much symmetrical, able to pull <em>up</em>
+       just as hard as they can pull <em>down</em>, unlike TTL which 
+cannot pull up as hard as down.&nbsp; If you had to boil my test results
+ down to
+       approximations and treat the circuits as just a resistance, the 
+data pin drivers acted very roughly like a SPDT switch with 50&#937; in 
+series
+       with the common terminal (ie, the output); and the address bus 
+pins, as a SPDT switch with 60&#937; in series.&nbsp; The time constant of
+       60&#937; times the capacitive load of 10 CMOS loads is around 3ns, 
+which is less added delay than you'll get from a bus transceiver IC.<p>
+
+       In a separate test on WDC's W65C<u>2</u>2<u>S</u> VIA (not the W65C22<u>N</u>) I/O pins years earlier, I found they were each able to pull to
+       within 0.8V of <em>either</em> rail with a 220-ohm resistor to the opposite rail, meaning a 19mA load, even pulling <em>up</em>,
+ and give 50mA
+       into a dead short.&nbsp; Rockwell's R65C22 could pull down with 
+100mA into a dead short, but could not pull up as hard, not being 
+symmetrical
+       like WDC's.</p><p>
+
+   </p></li><li>WDC's CMOS parts, with the exception of the 65c22<u>N</u> and 65c51<u>N</u>,
+ have CMOS input levels, and feeding these inputs with 74LS logic
+        (which there's no reason to use anyway) is not guaranteed to 
+work, since 74LS cannot pull up nearly as high as CMOS outputs can.<p>
+
+   </p></li><li>According to the NMOS data sheets (we wonder if this may
+ be an error in them), the RDY input timing may vary between 
+manufacturers regarding
+       which &#934;2 edge it is referenced to.&nbsp; Some reference it to 
+&#934;2's <em>rising</em> edge, and others to its <em>falling</em>
+       edge.&nbsp; Rockwell even puts it <em>after</em> the rising edge which definitely looks like a mistake.&nbsp; All the CMOS data sheets give it as
+       a setup time before the <em>fall</em> of &#934;2.<p>
+
+   </p></li><li>Related, but regarding the WDC's VIA, the W65C22<u>S</u> (but not the W65C22<u>N</u>) commonly used with the 65C02:<p>
+       </p><ul><li>Its I/O pins, in the input mode, are true CMOS 
+inputs.&nbsp; The heavy LS-type load presented by other VIAs' (even CMOS
+ ones') I/O pins
+               in input mode was a problem for some applications.<p>
+
+           </p></li><li>It has bus-holding devices on the I/O pins which
+ keep the input at the last-driven logic level.&nbsp; If you drive it 
+high or low, then
+               disconnect the drive, it will hold itself at that 
+level.&nbsp; There is no problem with leaving unused pins unconnected 
+like there is
+               with many other CMOS inputs.<p>
+
+           </p></li><li>It has a totem-pole <span style="text-decoration: overline;">IRQ</span> output rather than the open-drain output that others
+               have.&nbsp; This is addressed in the <a href="http://wilsonminesco.com/6502interrupts/" target="_blank">interrupts primer</a>.&nbsp; It
+               may seem like an undesirable feature since you can no longer wire-OR the <span style="text-decoration: overline;">IRQ</span> pins together
+               but must use an AND gate instead; but the <span style="text-decoration: overline;">IRQ</span> output was made this way so the rise time
+               of the <span style="text-decoration: overline;">IRQ</span>
+ input to the µP would not be limited by the bus capacitance and the
+               pull-up resistor causing it to float up too slowly for 
+some situations when operating at maximum clock speeds (up to 25MHz).
+       </li></ul>
+</li></ul>
+
+
+<br>
+<h1><a name="sw"></a></h1><center><big><big><strong>Software differences</strong></big></big></center>
+
+<ul>
+   <li>CMOS has more instructions and addressing modes.
+
+<p><strong>CMOS 65c02 new instructions that were not on the NMOS 6502 at all:</strong><font color="#004800">
+<!--<p><table cellpadding="2" cellspacing="2" border="1">
+<tr><th>instruction<br>&amp; addr mode</th><th>op code<br>(in hex)</th><th>description</th></tr>
+<tr><td>BRA rel</td><td>80</td><td>Branch Relative Always, range -128 to +127</td></tr>
+
+<tr><td>PHX</td><td>DA</td><td>PusH X.  No need to go through A.</td></tr>
+<tr><td>PLX</td><td>FA</td><td>PulL X.  No need to go through A.</td></tr>
+<tr><td>PHY</td><td>5A</td><td>PusH Y.  No need to go through A.</td></tr>
+<tr><td>PLY</td><td>7A</td><td>PulL Y.  No need to go through A.</td></tr>
+
+<tr><td>STZ &lt;addr&gt;</td><td>9C</td><td>STore a Zero.  No need to disturb A, X, or Y.</td></tr>
+<tr><td>STZ &lt;addr&gt;,X</td><td>9E</td><td>STore a Zero.  No need to disturb A, X, or Y</td></tr>
+<tr><td>STZ &lt;ZP&gt;</td><td>64</td><td>STore a Zero.  No need to disturb A, X, or Y</td></tr>
+<tr><td>STZ &lt;ZP&gt;,X</td><td>74</td><td>STore a Zero.  No need to disturb A, X, or Y</td></tr>
+
+<tr><td>TRB &lt;addr&gt;</td><td>1C</td><td>Test &amp; Reset memory Bits w/ A.</td></tr>
+<tr><td>TRB &lt;ZP&gt;</td><td>14</td><td>Test &amp; Reset memory Bits w/ A.</td></tr>
+<tr><td>TSB &lt;addr&gt;</td><td>0C</td><td>Test &amp; Reset memory Bits w/ A.</td></tr>
+<tr><td>TSB &lt;ZP&gt;</td><td>04</td><td>Test &amp; Reset memory Bits w/ A.</td></tr>
+
+<tr><td>BBR &lt;ZP&gt;</td><td>0F-7F [1]</td><td>Branch if specified Bit is Reset.</td></tr>
+<tr><td>BBS &lt;ZP&gt;</td><td>8F-FF [1]</td><td>Branch if specified Bit is Set.</td></tr>
+<tr><td>RMB &lt;ZP&gt;</td><td>07-77 [1]</td><td>Reset specified Memory Bit.</td></tr>
+<tr><td>SMB &lt;ZP&gt;</td><td>87-F7 [1]</td><td>Set specified Memory Bit.</td></tr>
+
+<tr><td>STP</td><td>DB</td><td>SToP the processor until the next RST.<br>Power-supply current drops to nearly zero.</td></tr>
+<tr><td>WAI</td><td>CB</td><td>WAIt.  It's like STP, but any interrupt will make it resume execution.<br>Especially useful for superfast interrupt response.<br>See <a href="http://wilsonminesco.com/6502interrupts/index.html#2.3" target="_blank">interrupts primer</a>.</td></tr>
+
+</table>-->
+
+
+</font></p><pre><font color="#004800">instruction    op code
+&amp; addr mode    (in hex)    description
+
+BRA rel          80       Branch Relative Always (unconditionally), range -128 to +127.
+
+PHX              DA       PusH X.  &#8254;&#8969;
+PLX              FA       PulL X.   |  No need to go through A for these anymore.
+PHY              5A       PusH Y.   |
+PLY              7A       PulL Y.  _&#8971;
+
+STZ  addr        9C       &#8254;&#8969;
+STZ  addr,X      9E        |  STore a Zero, regardless of what's in A, X, or Y.
+STZ  ZP          64        |  Processor registers are not affected by STZ.
+STZ  ZP,X        74       _&#8971;
+
+TRB  addr        1C       &#8254;&#8969;  Test &amp; Reset memory Bits with A.
+TRB  ZP          14       _&#8971;
+
+TSB  addr        0C       &#8254;&#8969;  Test &amp; Set memory Bits with A.
+TSB  ZP          04       _&#8971;
+
+BBR  ZP       0F-7F [1]   Branch if specified Bit is Reset. &#8254;&#8969; These are most useful
+BBS  ZP       8F-FF [1]   Branch if specified Bit is Set.    | when I/O is in ZP.  They
+RMB  ZP       07-77 [1]   Reset specified Memory Bit.        | are on WDC &amp; Rockwell but
+SMB  ZP       87-F7 [1]   Set specified Memory Bit.         _&#8971; not GTE/CMD or Synertek.
+
+STP              DB       SToP the processor until the next RST.     &#8254;&#8969;
+                          Power-supply current drops to nearly zero.  |  These two are
+                                                                      |  on WDC only.
+WAI              CB       WAIt.  It's like STP, but any interrupt     | 
+                          will make it resume execution.  Especially  |
+                          useful for superfast interrupt response,    |
+                          with zero latency.  See <a href="http://wilsonminesco.com/6502interrupts/index.html#2.3" target="_blank">interrupts primer</a>. _&#8971;
+
+
+<u>Note</u>: [1] Only the most-significant digit of the op code changes; so for example BBR's
+op codes are 0F, 1F, 2F, 3F, 4F, 5F, 6F, and 7F, for BBR0 to BBR7.  The bit number is
+specified in the op code rather than the operand.  These operate in ZP only.  Rockwell
+added these first, for their microcontrollers that had I/O in ZP.  WDC added them in
+the early 1990's.  The Aug '92 data sheet shows the W65C02S available without them, and
+the W65C02S<u>B</u> <em>with</em> them, but said eventually they would <em>all</em> have them, and be labeled
+W65C02S, without the B.  By the July '96 data sheet, these instructions were standard
+in all of them.
+
+
+</font></pre>
+<strong>CMOS 65c02 instructions' addressing modes that were not on the NMOS 6502:</strong><font color="#004800">
+<pre>instruction    op code
+&amp; addr mode    (in hex)    description
+
+ADC  (addr)      72       ADC absolute indirect
+AND  (addr)      32       AND absolute indirect
+BIT  addr,X      3C       BIT absolute indexed
+BIT  ZP,X        34       BIT zero-page indexed
+BIT  #           89       BIT immediate
+CMP  (addr)      D2       CMP absolute indirect
+DEC  A           3A       DECrement accumulator (alternate mnemonic: DEA)
+INC  A           1A       INCrement accumulator (alternate mnemonic: INA)
+EOR  (addr)      52       EOR absolute indirect
+JMP  (addr,X)    7C       JMP absolute indexed indirect
+LDA  (addr)      B2       LDA absolute indirect
+ORA  (addr)      12       ORA absolute indirect
+SBC  (addr)      F2       SBC absolute indirect
+STA  (addr)      92       STA absolute indirect
+
+</pre></font>
+Appetite whetter:&nbsp; the 65816 adds even more instructions and 
+addressing modes, filling out the table, and is able (but not required) 
+to handle
+16 bits of data at a time, as well as 24-bit addresses, and has a 16-bit
+ stack pointer and more stack-addressing modes, relocatable zero page 
+(so for
+example each task can have its own), and other attractions.&nbsp; It is 
+actually <em>easier</em> to program than the '02 is if you're constantly
+handling 16-bit data, and is much better suited for relocatable code, 
+multitasking, etc..&nbsp; If it seems scary, keep in mind that all the 
+new '816
+features can be used or ignored at one's leisure, and picked up little 
+by little as you're ready.&nbsp; You can start out by initially using it
+ just
+like a 6502.<p><br>
+
+
+   </p></li><li>On the NMOS 6502, the <a href="http://www.oxyron.de/html/opcodes02.html" target="_blank">"illegal" op codes</a> (see
+       <a href="http://www.pagetable.com/?p=39" target="_blank">this page</a> for more explanation), performed strange operations, undocumented by
+       manufacturers, and were popular, and were used in the <a href="http://en.wikipedia.org/wiki/GEOS_%288-bit_operating_system%29" target="_blank">GEOS
+       GUI</a> for the Commodore 64, to meet the speed and memory 
+requirements to make GEOS a viable software product on that limited 
+machine.&nbsp; The
+       CMOS 6502 does not have those, but its new instructions and 
+addressing modes are more useful anyway.&nbsp; CMOS still leaves some op
+ codes unused,
+       but they do not crash the µP like some of the illegal op codes do
+ on NMOS.<p>
+
+   </p></li><li>On the <a href="http://laughtonelectronics.com/Arcana/KimKlone/Kimklone_opcode_mapping.html" target="_blank">CMOS 65c02, illegal op codes</a>
+       initially act as<tt> NOP</tt>s, but can be useful for single-cycle time delays, and more interestingly, for effectively
+       extending the processor's instruction set; for example, Jeff Laughton's
+       <a href="http://wilsonminesco.com/6502primer/potpourri.html#Jeff" target="_blank">fast (1-cycle) 65c02 I/O</a> methods using the illegal op codes
+       in the _3 and _B columns, his <a href="http://laughtonelectronics.com/Arcana/KimKlone/Kimklone_short_summary.html" target="_blank">KimKlone 65c02</a>
+       w/ pointer-arithmetic-friendly extended address space and 9-cycle ITC Forth<tt> NEXT </tt>instruction, and the memory-mapping ops
+       of the <a href="https://en.wikipedia.org/wiki/Hudson_Soft_HuC6280" target="_blank">Hudson</a> 65c02-based processor used in the
+       <a href="https://en.wikipedia.org/wiki/TurboGrafx-16" target="_blank">TurboGrafx-16 Entertainment SuperSystem</a>.&nbsp; <strong><font color="DarkRed">In
+       this respect, these could be considered to be combination hardware/software differences</font>.</strong>
+
+       <p>This table shows the number of bytes and cycles taken by the CMOS instructions:
+
+       </p><p>
+
+       <!-- <img src="NMOS-CMOS%206502%20differences_files/65c02_NOPs.gif"> -->
+      
+       <style>
+         ._65c02_NOPs, td, th {
+           border: 1px solid black;
+           padding: 5px;
+         }
+
+         ._65c02_NOPs {
+           border-collapse: collapse;
+         }
+
+         .valign {
+           vertical-align: top;
+         }
+
+         .w65c02s {
+           text-align: center;
+         }
+       </style>
+
+       <table class="_65c02_NOPs">
+         <thead>
+           <tr>
+             <th>Function</th>
+             <th>NMOS 6502</th>
+             <th colspan="3">W65C02S</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td class="valign" rowspan="8">Execution of Invalid OpCodes.</td>
+             <td class="valign" rowspan="8">Some terminate only by reset.<br/>Results are undefined.</td>
+             <td colspan="3">All are NOP's (reserved for future use).</td>
+           </tr>
+           <tr>
+             <td class="w65c02s">OpCode</td>
+             <td class="w65c02s">Bytes</td>
+             <td class="w65c02s">Cycle</td>
+           </tr>
+           <tr>
+             <td>02,22,42,62,82,C2,E2</td>
+             <td>2</td>
+             <td>2</td>
+           </tr>
+           <tr>
+             <td>X3,0B-BB,EB,FB</td>
+             <td>1</td>
+             <td>1</td>
+           </tr>
+           <tr>
+             <td>44</td>
+             <td>2</td>
+             <td>3</td>
+           </tr>
+           <tr>
+             <td>54,D4,F4</td>
+             <td>2</td>
+             <td>4</td>
+           </tr>
+           <tr>
+             <td>5C</td>
+             <td>3</td>
+             <td>8</td>
+           </tr>
+           <tr>
+             <td>DC,FC</td>
+             <td>3</td>
+             <td>4</td>
+           </tr>
+         </tbody>
+       </table>
+
+       </p><p>It's from the forum topic <a href="http://forum.6502.org/viewtopic.php?p=36187#p36187" target="_blank">Introducing Tali Forth for the 65c02
+       (ALPHA)</a>".&nbsp; Note the software ability to skip over <em>two</em> bytes.&nbsp; You can do for example:
+</p><pre>
+              .DB  $DC    ; This is the illegal op code of a 3-byte, 4-cycle NOP.
+branch_dest:  LDA  #71    ; Its operand will be this 2-byte, 2-cycle instruction.
+              &lt;continue&gt;
+
+</pre>
+       If you branch or jump to<tt> branch_dest, </tt>the<tt> LDA&nbsp;#71 </tt>will be executed; but if you
+       arrive there without branching, ie, from directly above it, the<tt> LDA </tt>will get skipped, and there will be no effect
+       on status bits.&nbsp; Actually, the<tt> LDA&nbsp;#71 </tt>will 
+get loaded as a two-byte operand for the illegal $DC
+       instruction, and the address that operand points to will get read
+ and the data discarded, like an absolute load-and-discard instruction; 
+so
+       you might need to be careful that you don't read an I/O register 
+where the I/O IC's status would be changed by doing so (like the 
+situation
+       with<tt> BIT&nbsp;addr</tt>).&nbsp; The danger of doing it inadvertently will be very low.<p>
+
+
+   </p></li><li>CMOS corrects all the bugs and quirks of the NMOS:<!--from p.1-10 of Rockwell book.-->
+       <ul>
+           <li><tt>JMP(xxFF): </tt>NMOS did not increment the page when reading the second byte, so the jump was wrong.
+           </li><li>N, V, and Z flags were incorrect after decimal operation (but C was ok).&nbsp; (CMOS adds one cycle to fix them.)
+           </li><li>A<tt> BRK </tt>instruction that was being fetched when an interrupt hit was ignored on NMOS.&nbsp; (CMOS executes
+               the<tt> BRK, </tt>then takes the interrupt.)
+           </li><li>D was not cleared on RST, IRQ, or NMI.&nbsp; (CMOS does clear D in these situations.)
+           </li><li>RDY being negated (pulled low, as RDY is positive 
+logic) during write cycle had no effect.&nbsp; (CMOS gives the expected 
+wait state(s).)
+           </li><li>Indexing across a page boundary caused an extra read
+ of an invalid address, which could cause trouble in some 
+hardware.&nbsp; (CMOS does an
+               extra read of the last instruction byte instead.)
+           </li><li>RMW instructions at effective address did one read 
+and two writes, which could cause trouble if it's I/O.&nbsp; (CMOS does 
+two reads and one write.)
+      </li></ul>
+</li></ul>
+
+<!--<br>
+<h1><a NAME="def"></a></h1><center><big><big><strong>Combination hardware/software differences</strong></big></big></center>
+
+<br>
+<br>
+<h1><a NAME="var"></a></h1><center><big><big><strong>Processor variations</strong></big></big></center>
+
+<p>There were many variations on the NMOS 6502 for inexpensive game machines, home computers, and other products.&nbsp; The following is no doubt
+only a partial list.
+<ul>
+    <li><a href="http://6502.org/documents/datasheets/mos/mos_6500_mpu_nov_1985.pdf" target="_blank">6502, 6503, 6504, 6505, 6506, 6507, 6512,
+         6513, 6514, 6515</a> (.pdf) eight of these being in 28-pin packages, with variations on number of address pins and which signals are
+         included<p>
+
+    <li><a href="http://6502.org/documents/datasheets/mos/mos_6508_mpu.pdf" target="_blank">6508</a> (.pdf) 6502 with 256 bytes of RAM onboard
+        in page 0 and page 1, and an 8-bit I/O port<p>
+
+    <li><a href="http://6502.org/documents/datasheets/mos/mos_6509_mpu.pdf" target="_blank">6509</a> (.pdf) 6502 with 4-bit extended address
+        register for 1MB address space<p>
+
+    <li><a href="http://6502.org/documents/datasheets/mos/mos_6510_mpu_nov_1982.pdf" target="_blank">6510</a> (.pdf) omits the RDY, SYNC, &phi;1,
+        <span style="text-decoration: overline;">S.O.</span>, the N.C.'s, and one of the Vss pins, and adds an 8-bit I/O port with the data register
+        at address 0001, and data-direction register at adddress 0000.&nbsp; This port was used by the Commodore 64 for memory banking. (verify
+        this)<p>
+
+    <li><a href="http://6502.org/documents/datasheets/mos/mos_6500-1_one-chip_microcomputer_oct_1986.pdf" target="_blank">6500/1</a> (.pdf) 6502-based
+        microcontroller with 2K of ROM, 64 bytes of RAM, 32 interface I/O lines, 16-bit programmable timer/counter, and 5 interrupts<p>
+
+    <li><a href="http://6502.org/documents/datasheets/rockwell/rockwell_r6501q.pdf" target="_blank">6501Q</a> (.pdf) 6502-based
+        (plus<tt> RMB, SMB, BBS, </tt>and<tt> BBR </tt>instructions) microcontroller in 64-pin QUIP, with
+        internal clock oscillator, 192 bytes of RAM, 2 16-bit counter/timers, 32 I/O lines (including 4 edge-sensitive lines and input latching
+        on one 8-bit port), full-duplex serial I/O, 10 interrupts, and bus expandability<p>
+
+    <li><a href="http://6502.org/documents/datasheets/rockwell/rockwell_r6511q_r6500-13.pdf" target="_blank">6500/13</a> (.pdf) 6502-based
+        microcontroller with the bit-manipulation instructions of the 6501Q above, 256 bytes of ROM, 192 bytes of RAM, and the I/O of the 6501Q
+        above.&nbsp; The <u>6511Q</u> (data sheet at same URL) is the same except has no ROM.<p>
+
+    <li>
+</ul>
+
+<br>
+<p>Similarly, there were many variations on the CMOS 65c02:
+<ul>
+    <li>The Jan '87 GTE (later CMD, California Micro Devices) data book shows a similar list as above, on pages 1-12 to 1-14, but in CMOS: the 65c02,
+        65c03, 65c04, 65c05, 65c06, 65c07, 65c12, 65c13, 65c14, 65c15, 65c102, 65c103, 65c104, 65c105, 65c106, 65c107, 65c112, and 65c115, 14 of these
+        being in 28-pin packages, with variations on number of address pins and which signals are included.&nbsp; (The GTE specifiers added other digits
+        so they would be for example G65SC02, G65SC03, etc., plus suffixes for version, package type, temperature range, and speed.)
+
+    <li>
+
+    <li>Today the 65c02 is going into products at a rate of over a hundred million a year, but they're almost all in custom ICs, and WDC licenses the
+        IP.&nbsp; There have been various off-the-shelf 65c02-based microcontrollers over the decades,
+        Renesas and Sunplus microcontrollers' processors are similar to the 65c02 but these brands are not available in small quantities.
+
+</ul>
+
+
+<p>links from http://wilsonminesco.com/links.html#65fam:<br>
+<a href="http://www.archaeology.org/1107/features/mos_technology_6502_computer_chip_cpu.html" target="_blank">6502 origins</a><br>
+<a href="http://homepage.mac.com/jorgechamorro/a2things/PDFs/65xxx.txt" target="_blank"> 65816 origins, 6516, 65032, 65832</a><br> (Dead link.  See below.)
+<a href="http://web.archive.org/web/20100331075737/http://homepage.mac.com/jorgechamorro/a2things/PDFs/65xxx.txt" target="_blank"> 65816 origins, 6516, 65032, 65832</a><br>
+<a href="http://www.commodore.ca/manuals/funet/cbm/documents/chipdata/65ce02.txt" target="_blank">65CE02 improvements over the 65c02</a><br>
+<a href="http://www.atariage.com/forums/topic/151182-synertec-6516-pseudo-16bit-cpu-for-a400800/" target="_blank">6516 (Synertek) 16-bit pseudo-6502</a> for Atari 400&#47;800 computers, never made it to market<br>
+<a href="http://www.ucc.gu.uwa.edu.au/~john/65020.html" target="_blank">65020 double-wide 6502 proposal</a><br>
+<a href="http://www.ex6502.altervista.org/doku.php" target="_blank">6502EX (6502 extended to 32 bits)</a><br>
+<a href="http://forum.6502.org/viewtopic.php?f=1&t=1419" target="_blank">65Org32 developments of ideas</a> for an all-32-bit 65816 extension (forum topic)<br>
+
+<p>Tell briefly about R6501 (not the original 6501 that got MOS in legal trouble with Mot), R6518, R6500/11, R6500/12, R6500/15, R65F11, R65F12
+
+
+<p>The <a href="http://6502.org/documents/datasheets/mos/mos_65ce02_mpu.pdf" target="_blank">65CE02</a> was a Commodore-designed enhancement to the 65C02, with most dead bus cycles eliminated (31 op codes executed in a single clock cycle), additional instructions and addressing modes (the op code table is full), 16-bit stack pointer, relocatable zero page, extra index register Z, and DMA capability.&nbsp; Very few were made.
+
+<p>Tell briefly about R65C10, 65802, 65150, 65151, 65134, 65816, 65265, 65C19
+-->
+
+
+<br>
+<br>
+<h1><a name="av"></a></h1><center><big><big><strong>Availability</strong></big></big></center>
+
+<p>None of the NMOS parts have been made in many years (decades?) but 
+NOS (new old stock) can sometimes be found, and some distributors like 
+Jameco have
+"pulls," ie, ones that have been pulled out of circuit boards, mostly 
+used.&nbsp; Some of the CMOS parts are also discontinued, the ones that 
+come to
+mind being the GTE/CMD 65C03, '04, '05, '06, 07, '12, '13, '14, '15, 
+'102, '103, '104, '105, '106, '107, '112, '115, '150, and '151, the 
+Rockwell '19,
+and the WDC 65C802.&nbsp; <u>WDC plans to continue making the CMOS 65C02, '816, '134 µC, '265 µC, and I/O ICs indefinitely</u>, at least in
+DIP and PLCC and some also in PQFP, and there are many distributors selling them.&nbsp; We try to keep the forum sticky topic
+"<a href="http://forum.6502.org/viewtopic.php?f=1&amp;t=1953" target="_blank">65xx parts sources</a>" up to date, so please refer there.
+
+<br>
+<br>
+<br>
+</p><h1><a name="fur"></a></h1><center><big><big><strong>For further reading</strong></big></big></center>
+<p>
+<a href="http://forum.6502.org/viewtopic.php?f=2&amp;t=2913&amp;p=32682#p32682" target="_blank">65c02 advantages</a> (forum topic)<br>
+<a href="http://forum.6502.org/viewtopic.php?f=4&amp;t=1634" target="_blank">A taken branch delays interrupt handling by one instruction</a> (forum
+        topic)&nbsp; There seems to be a difference between NMOS and CMOS in this area as well.<br>
+<a href="http://forum.6502.org/viewtopic.php?p=38895#p38895" target="_blank">A 65C02 bug?</a>
+ (it was a bug in the documentation, not the
+        processor)&nbsp; (forum topic)&nbsp; See Jeff's post on cycle 
+timing differences between NMOS &amp; CMOS in R-M-W instructions.<br>
+<a href="http://forum.6502.org/viewtopic.php?f=4&amp;t=3360" target="_blank">Least Obvious Incompatibility</a> (forum topic)<br>
+<a href="http://westerndesigncenter.com/wdc/documentation/w65c02s.pdf" target="_blank">65c02 data sheet</a> (.pdf) from WDC<br>
+<a href="http://westerndesigncenter.com/wdc/documentation/w65c816s.pdf" target="_blank">65816 data sheet</a> (.pdf) from WDC<br>
+"<a href="http://wdc65xx.com/Programming-Manual/" target="_blank">Programming the 65816-Including the 6502, 65C02 and 65802</a>,"
+the outstanding programming manual by David Eyes and Ron Liechty.&nbsp; By far the best.<br>
+I came across <a href="http://www.cpu-world.com/info/6502/65xx_65Cxx_65SCxx_differences.html" target="_blank">this CPU World page</a> in Feb
+2018 giving more details on the variants like 6504, 6505, 6506, 6507, etc. (not so much the NMOS-CMOS differences).<br>
+
+</p><p><br>links from my links page, under "65-family processors", at http://wilsonminesco.com/links.html#65fam :<br>
+<a href="http://www.archaeology.org/1107/features/mos_technology_6502_computer_chip_cpu.html" target="_blank">6502 origins</a><br>
+<!--<a href="http://homepage.mac.com/jorgechamorro/a2things/PDFs/65xxx.txt" target="_blank"> 65816 origins, 6516, 65032, 65832</a><br> (Dead link.  See below.)-->
+<a href="http://web.archive.org/web/20100331075737/http://homepage.mac.com/jorgechamorro/a2things/PDFs/65xxx.txt" target="_blank"> 65816 origins, 6516, 65032, 65832</a><br>
+<a href="http://www.commodore.ca/manuals/funet/cbm/documents/chipdata/65ce02.txt" target="_blank">65CE02 improvements over the 65c02</a><br>
+<a href="http://www.atariage.com/forums/topic/151182-synertec-6516-pseudo-16bit-cpu-for-a400800/" target="_blank">6516 (Synertek) 16-bit pseudo-6502</a> for Atari 400/800 computers, never made it to market<br>
+<a href="http://www.ucc.gu.uwa.edu.au/~john/65020.html" target="_blank">65020 double-wide 6502 proposal</a><br>
+<a href="http://shu.emuunlim.com/download/pcedocs/pce_cpu.html" target="_blank">HuC6280</a>,
+ a PC Engine using a special version of the 65c02
+(with all the modern CMOS instructions minus STP and WAI), with a memory
+ management unit (MMU).&nbsp; Of special interest are the instructions
+directly involved with memory mapping and moving, and a T flag, which 
+when set (using <tt>SET</tt>), causes accumulator
+instructions to operate on the ZP address pointed to by X instead, 
+without affecting A!&nbsp; It makes it like having 257 accumulators.<br>
+<a href="http://www.ex6502.altervista.org/doku.php" target="_blank">6502EX (6502 extended to 32 bits)</a><br>
+<a href="http://forum.6502.org/viewtopic.php?f=1&amp;t=1419" target="_blank">65Org32 developments of ideas</a> for an all-32-bit 65816 extension (forum topic)<br>
+
+
+
+<br><br><br>If you know of additional differences I should add, or see errors, please email me.
+
+<br><br>
+<small>last updated Oct 12, 2021 &nbsp; &nbsp; &nbsp; &nbsp; Garth 
+Wilson &nbsp; email wilsonminesBdslextremeBcom&nbsp;(replacing the B's
+with<strong> @ </strong>and<strong> .</strong>)</small>
+<br>
+
+
+</p></body></html>
