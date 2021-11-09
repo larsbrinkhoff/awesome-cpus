@@ -1,7 +1,7 @@
 This subfolder contains the documents and other stuff for 6502 and 65816 CPU family.
 
-[Main Wikipedia article on this family](https://en.wikipedia.org/wiki/MOS_Technology_6502)
-[Main Wikipedia article on this family](https://en.wikipedia.org/wiki/WDC_65816/65802)
+[MOS 6502 wkipedia article](https://en.wikipedia.org/wiki/MOS_Technology_6502)
+[WDC 65816/65802 wikipedia article](https://en.wikipedia.org/wiki/WDC_65816/65802)
 
 | Files | Description | Source |
 | ----- | ----------- | ------ |
@@ -13,4 +13,5 @@ This subfolder contains the documents and other stuff for 6502 and 65816 CPU fam
 | mos_6510_mpu.pdf | | |
 | w65c816s.pdf | WDC 65C816 data sheet | Believed to be taken from http://www.6502.org |
 | wdc_65816_programming_manual.pdf | WDC 65C816 Programming Manual | Believed to be taken from http://www.6502.org |
-| wdc_w65c02s_oct_19_2010.pdf | WDC 65C02S data sheet | Believed to be taken from http://www.6502.org |
+| wdc_w65c02s_oct_19_2010.pdf | WDC 65C02S data sheet (Oct 19 2010) | Believed to be taken from http://www.6502.org |
+| wdc_w65c02s_feb_25_2020.pdf | WDC 65C02S data sheet (Feb 25 2020) | https://www.westerndesigncenter.com/wdc/documentation/w65c02s.pdf |
