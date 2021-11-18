@@ -7,6 +7,7 @@ This subfolder contains the documents and other stuff for 6502 and 65816 CPU fam
 | ----- | ----------- | ------ |
 | 6502_opcode_table.htm | 6502 opcode table in HTML format | URL not determined |
 | 65816_opcode_table.htm | 65816 opcode table in HTML format | The-Blue-Wizard created it; in public domain |
+| 6502 & 65816 Instructions.pdf | 6502 & 65816 Instructions Summary | http://err0r.tech/crowcousins/65xx_ops.pdf |
 | 65c02.txt | 65C02 Quick Card | URL not determined |
 | 65c816.txt | | URL not determined |
 | cmd_g65sc02_datasheet.pdf | California Micro Devices G65SC02 data sheet | http://pdf.datasheetcatalog.com/datasheet/calmicro/G65SC02.pdf |
