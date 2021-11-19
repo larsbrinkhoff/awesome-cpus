@@ -5,4 +5,5 @@ This subfolder contains the documents and other stuff for 6809 CPU family.
 
 | Files | Description | Source |
 | ----- | ----------- | ------ |
-| 6809.pdf | Motorola 6809 Datashee | |
+| datasheet.pdf | Motorola 6809 Datasheet | |
+| manual.pdf | Motorol MC6809-MC6809E 8-Bit Microprocessor Programming Manual (01-Mar-1981) | |
