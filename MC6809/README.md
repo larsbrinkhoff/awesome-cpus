@@ -11,3 +11,4 @@ This subfolder contains the documents and other stuff for 6809/6309 CPU family.
 | Motorola MC6809 Datasheet.pdf | Motorola MC6809 Datasheet | |
 | Motorola MC6809E Datasheet.pdf | Motorola MC6809E Datasheet | http://www.bitsavers.org/components/motorola/_dataSheets/6809E.pdf |
 | The 6309 Book.pdf | The 6309 Book<br/>Inside the 6309 Microprocessor Second Editon | |
+| HD63B09, HD63C09 Datasheet.pdf | HD63B09, HD63C09 Datasheet | http://pdf.datasheetcatalog.com/datasheets2/26/2677842_1.pdf |
