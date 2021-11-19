@@ -1,5 +1,6 @@
 This subfolder contains the documents and other stuff for 6809/6309 CPU family.
 
+[Hitachi 6309 wikipedia article]https://en.wikipedia.org/wiki/Hitachi_6309)<br/>
 [Motorola 6809 wikipedia article](https://en.wikipedia.org/wiki/Motorola_6809)<br />
 [Motorola 6809E Pin assignment and datasheet](http://www.msarnoff.org/chipdb/6809E)
 
